@@ -1,0 +1,22 @@
+.input a
+pinlist: a
+
+.input bpad
+pinlist: b
+
+.input clk
+pinlist: clk
+
+
+.global clk
+
+.clb more_complex
+pinlist:  a b open out_1 out_2 clk
+subblock: sb_zero 0 1 1 open 4 open  
+
+.output opad_1
+pinlist: out_1
+
+.output opad_2
+pinlist: out_2
+

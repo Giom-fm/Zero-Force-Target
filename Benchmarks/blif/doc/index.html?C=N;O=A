@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+  <head>
+  
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+    <meta name="generator" content="xml2html HTML Generator &copy; uwe@fh-wedel.de"/>
+    <link rel="shortcut icon" type="image/ico" href="https://www.fh-wedel.de/typo3conf/ext/in2template/Resources/Public/Images/favicon.ico"/>
+    <meta name="keywords" content="Wedel,Fachhochschule,FH,FH Wedel, Fachhochschule Wedel, Informatik, Wirtschaftsinformatik, Medieninformatik, Technische Informatik, Wirtschaftsingenieur, Physikalische Technik,Betriebswirtschaftslehre,BWL,Diplom,Master,Master of Science,Science,Hochschule,Ausbildung,Studium,Studieren,Studenten,Student,University,Applied,Sciences,Wirtschaft,Bachelor,Auslandsprogramme,BSC,MSC"/>
+    <meta name="description" content="International, praxisnah und interdisziplin&auml;r studieren - an der Fachhochschule Wedel, direkt vor den Toren Hamburgs! Entscheiden Sie sich f&uuml;r die leistungsstarke Uni-Alternative in den Studienbereichen Informatik, Wirtschaft und Technik. Informieren Sie sich hier und jetzt &uuml;ber unsere kombinierten Bachelor-/Masterstudieng&auml;nge, das umfangreiche Lehrangebot sowie die hervorragenden Ranking-Ergebnisse!"/>
+   
+    
+        <link href="/css/standard_main.css" rel="stylesheet" type="text/css" media="all" title="Bildschirmansicht"/>
+
+        <link href="/css/standard_main_print.css" rel="stylesheet" type="text/css" media="print"/>
+
+        <link href="/css/standard_main_print.css" rel="alternate stylesheet" type="text/css" title="Druckansicht"/>
+
+        <!--[if lte IE 6]>
+        <link href="/css/standard_main_ie.css" rel="stylesheet" type="text/css"/>
+        <![endif]-->
+
+    
+
+
+
+    <title>FH&nbsp;Wedel - Handout Server</title>
+
+  </head>
+
+  <body class="text">
+
+  
+    <div id="page_margins">
+      <div id="page" class="hold_floats">
+         <!-- #Header: Anfang -->
+        <hr class="Abschnittstrenner" title="Beginn des Kopfbereiches."/>
+        <div id="header" class="fhw_header">
+          
+          <div id="Navigationshilfe"><a name="Navigationshilfe"></a>
+            Navigationshilfe:
+            <ul>
+
+    
+    
+
+              <li><a href="#Seiteninhalt" title="Der eigentliche Inhalt dieser Seite">Direkt zum Inhaltsbereich springen</a></li>
+
+              <li><a href="#Hauptnavigation" title="Links zu anderen Seiten dieser Web-Präsenz.">Direkt zur Hauptnavigation springen</a></li>
+            </ul>
+          </div>
+
+
+ 
+
+          <div id="logo">
+            <a href="http://www.fh-wedel.de"><img src="/icons/fh_logo2.gif" width="30" alt="FH Wedel - University of Applied Sciences" height="90" title="Fachhochschule Wedel"/></a>
+              
+          </div>
+
+          <div id="breadcrumb">
+
+            <div id="breadcrumb_content">
+              <span class="screen_invisible">Ihre Position in dieser Webpräsenz: <br/></span>
+              Sie sind hier:<a href="/">Startseite</a>&nbsp;>&nbsp;<a href="/handout/">Handout</a>
+            </div>
+          </div>
+
+        </div>
+        <!-- #Header: Ende -->
+
+
+        
+        <!-- #main: Beginn Inhaltsbereich -->
+        <div id="main">
+
+          
+    
+          <!-- #col1: Erste Float-Spalte des Inhaltsbereiches -->
+          <div id="col1"><a id="Nachrichtenbereich" name="Nachrichtenbereich"></a>
+            <div id="col1_content" class="clearfix">
+
+              &nbsp;
+            </div>
+          </div>
+          <!-- #col1: - Ende -->
+  
+  
+
+          <!-- #col2: zweite Float-Spalte des Inhaltsbereiches -->
+          <hr class="Abschnittstrenner" title="Beginn des Inhaltsbereiches."/>
+          <div id="col2"><a id="Seiteninhalt" name="Seiteninhalt"></a>
+            <div id="col2_content" class="clearfix">
+  <table>
+   <tr><th valign="top"><img src="/icons/blank.gif" alt="[ICO]" /></th><th><a href="?C=N;O=D">Name</a></th><th><a href="?C=M;O=A">Last modified</a></th><th><a href="?C=S;O=A">Size</a></th></tr>
+   <tr><th colspan="4"><hr /></th></tr>
+<tr><td valign="top"><a href="/handout/Sawitzki/EDA/Praktikum/Benchmarks/blif/"><img src="/icons/handout/back.png" alt="[PARENTDIR]" /></a></td><td><a href="/handout/Sawitzki/EDA/Praktikum/Benchmarks/blif/">Parent Directory</a></td><td>&nbsp;</td><td align="right">  - </td></tr>
+<tr><td valign="top"><a href="blif.pdf"><img src="/icons/handout/pdf.png" alt="[   ]" /></a></td><td><a href="blif.pdf">blif.pdf</a></td><td align="right">2014-04-09 15:18  </td><td align="right"> 53K</td></tr>
+<tr><td valign="top"><a href="sis_blif.pdf"><img src="/icons/handout/pdf.png" alt="[   ]" /></a></td><td><a href="sis_blif.pdf">sis_blif.pdf</a></td><td align="right">2014-04-09 15:19  </td><td align="right">424K</td></tr>
+   <tr><th colspan="4"><hr /></th></tr>
+</table>
+</div>            
+</div>
+          </div>
+          <!-- #col2: - Ende -->
+
+          <!-- #TEST -->
+					
+          <!-- #col3: Statische Spalte des Inhaltsbereiches -->
+          <hr class="Abschnittstrenner" title="Beginn der Hauptnavigation."/>
+          <div id="col3"><a id="Hauptnavigation" name="Hauptnavigation"></a>
+            <div id="col3_content" class="clearfix">
+
+              <h1 class="invisible">Hauptnavigation</h1>
+
+              <div class="navbar"
+<ul>
+     <li class="normalerMenuePunkt"><a class="" href="https://stud.fh-wedel.de/webmail/">Studenten Webmail</a></li>
+     <li class="aktuellerMenuePunkt"><a class="" href="https://stud.fh-wedel.de/handout/">Handoutbereich der FH Wedel</a></li>
+     <li class="normalerMenuePunkt"><a class="" href="http://intern.fh-wedel.de/~rzinfo">Rechenzentrum Informationen</a></li>
+     <li class="normalerMenuePunkt"><a class="" href="https://stud.fh-wedel.de/">Studenten Webseiten</a></li>
+</ul>
+              </div>
+
+            </div>
+            <div class="clear_columns"/>
+          </div>
+
+          <!-- #col3: - Ende -->
+        </div>
+        <!-- #main: - Ende -->
+
+
+      
+        <!-- #Footer: Beginn Fußzeile -->
+        <hr class="Abschnittstrenner" title="Beginn des Fußbereiches."/>
+        <div id="footer">
+		<a href="http://www.fh-wedel.de/sonstiges/impressum/" onfocus="blurLink(this);">Impressum</a>&nbsp;&#124;&nbsp;<a href="http://www.fh-wedel.de/sonstiges/kontakt/" onfocus="blurLink(this);">Kontakt</a>&nbsp;&#124;&nbsp;<a href="http://www.fh-wedel.de/sonstiges/datenschutz/" onfocus="blurLink(this);">Datenschutz</a>
+
+        </div>
+        <!-- #Footer: Ende -->
+
+
+      </div>
+ 
+  </body>
+</html>
+
+
