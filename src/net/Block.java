@@ -1,8 +1,5 @@
 package net;
 
-import java.util.LinkedList;
-import java.util.List;
-
 enum BlockType {
     INPUT,
     OUTPUT,
@@ -13,8 +10,8 @@ enum BlockType {
 public abstract class Block {
     private final String name;
     private int x, y;
-    private List<Block> inputs = new LinkedList<>();
-    private Block output;
+    
+    
 
     public static Block Builder(BlockType blockType, String blockName) {
         Block block = null;
@@ -59,23 +56,7 @@ public abstract class Block {
     public void setY(int y) {
         this.y = y;
     }
-
-    public List<Block> getInputs() {
-        return inputs;
-    }
-
-    public Block getOutput() {
-        return output;
-    }
-
-    public void setOutput(Block output) {
-        this.output = output;
-    }
-
-    public void setInputs(List<Block> inputs) {
-        this.inputs = inputs;
-    }
-
+   
     public abstract BlockType getBlockType();
 
 }

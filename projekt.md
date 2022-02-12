@@ -14,10 +14,10 @@
     * Kostenfunktion über "Federn"
         * Weit verbunden Zellen üben große Kraft aus
     * Ablauf
-        1. Einlesen der fixierten Pads
-        2. Einlesen der Netzliste
-        3. Erstellen des Netzgraphens
-        4. Zufällig Platzierung der Logikblöcke
-        5. Ermitteln der ZFT Position eines Blocks
-        6. Abbruchbedingung
+        1. Einlesen der Netzliste / fixierten Pads
+            * ArrayList anstatt LinkedList verwenden
+        2. Erstellen des Netzgraphens
+        3. Zufällig Platzierung der Logikblöcke
+        4. Ermitteln der ZFT Position eines Blocks
+        5. Abbruchbedingung
 
