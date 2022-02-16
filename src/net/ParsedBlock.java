@@ -26,6 +26,19 @@ public class ParsedBlock {
         this.output = output;
     }
 
+    public static List<ParsedBlock> getBlockThatIsConnectedTo(List<ParsedBlock> blocks, String net) {
+        Iterator<ParsedBlock> it = blocks.iterator();
+        List<ParsedBlock> results = new LinkedList<>();
+        ParsedBlock block;
+        while (it.hasNext()) {
+            block = it.next();
+            if (block.getName().equals(net)) {
+                results.add(block);
+            }
+        }
+        return results;
+    }
+
     public static List<ParsedBlock> Parse(String file) {
 
         Path path = Path.of(file);

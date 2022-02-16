@@ -40,12 +40,17 @@ public abstract class Block {
     public void setY(int y) {
         this.y = y;
     }
-   
+
     public abstract BlockType getBlockType();
 
     @Override
     public String toString() {
         return "[" + this.name + "@" + this.x + ":" + this.y + "]";
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj != null && obj instanceof Block && this.name.equals(((Block) obj).getName());
     }
 
 }

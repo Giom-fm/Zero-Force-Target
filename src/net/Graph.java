@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Graph {
 
@@ -12,6 +13,35 @@ public class Graph {
 
     public Graph(List<ParsedBlock> parsedBlocks, Map<String, ParsedPlacement> parsedPads) {
         this.createBlocksAndNets(parsedBlocks, parsedPads);
+    }
+
+    private void createBlocks(List<ParsedBlock> parsedBlocks, Map<String, ParsedPlacement> parsedPads) {
+        this.blocks = new HashMap<>();
+
+        Iterator<ParsedBlock> it = parsedBlocks.iterator();
+        ParsedBlock parsedBlock;
+        BlockType blockType;
+        String blockName;
+
+        while (it.hasNext()) {
+            parsedBlock = it.next();
+            blockType = parsedBlock.getType();
+            blockName = parsedBlock.getName();
+
+            if (blockType == BlockType.INPUT) {
+                ParsedPlacement pad = parsedPads.get(blockName);
+                InputPad ipad = new InputPad(blockName, pad.getX(), pad.getY());
+                String parsedBlockInput = parsedBlock.getInputs()[0];
+                List<ParsedBlock> inputs = ParsedBlock.getBlockThatIsConnectedTo(parsedBlocks, parsedBlockInput);
+
+            } else if (blockType == BlockType.OUTPUT) {
+
+            } else if (blockType == BlockType.LOGIC_BLOCK) {
+
+            } else {
+
+            }
+        }
     }
 
     private void createBlocksAndNets(List<ParsedBlock> parsedBlocks, Map<String, ParsedPlacement> parsedPads) {
@@ -76,4 +106,35 @@ public class Graph {
             }
         }
     }
+
+    public Map<String, Block> getBlocks() {
+        return blocks;
+    }
+
+    public Map<String, Net> getNets() {
+        return nets;
+    }
+
+    public List<LogicBlock> getLogicBlocks() {
+        return this.blocks.values().stream().filter((block) -> {
+            return block.getBlockType() == BlockType.LOGIC_BLOCK;
+        }).map((block) -> {
+            return (LogicBlock) block;
+        }).collect(Collectors.toList());
+    }
+
+    public List<Block> getPads() {
+        return this.blocks.values().stream().filter((block) -> {
+            return block.getBlockType() == BlockType.INPUT || block.getBlockType() == BlockType.OUTPUT;
+        }).collect(Collectors.toList());
+    }
+
+    public Block getBlock(String blockName) {
+        return this.blocks.get(blockName);
+    }
+
+    public Net getNet(String netName) {
+        return this.nets.get(netName);
+    }
+
 }
