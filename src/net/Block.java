@@ -59,7 +59,7 @@ public abstract class Block {
 
     @Override
     public String toString() {
-        return "[" + this.name + "@" + this.x + ":" + this.y + "]";
+        return this.name + "\t\t\t" + this.x + "\t" + this.y + "\n";
     }
 
     @Override

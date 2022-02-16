@@ -1,5 +1,8 @@
 package net;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -10,6 +13,14 @@ import java.util.stream.Collectors;
 public class Graph {
 
     private Map<String, Block> blocks;
+
+    public static void WriteToFile(String path, Graph graph) {
+        try {
+            Files.writeString(Paths.get(path), graph.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public Graph(List<ParsedBlock> parsedBlocks, Map<String, ParsedPlacement> parsedPads) {
         this.createBlocks(parsedBlocks, parsedPads);
@@ -91,6 +102,16 @@ public class Graph {
 
     public Block getBlock(String blockName) {
         return this.blocks.get(blockName);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        this.blocks.values().forEach((block) -> {
+            builder.append(block.toString());
+        });
+
+        return builder.toString();
     }
 
 }

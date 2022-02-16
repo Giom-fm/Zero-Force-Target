@@ -21,6 +21,7 @@ public class Main {
         graph.getLogicBlocks().forEach((block) -> {
             block.getZFT();
         });
+        Graph.WriteToFile("./out/output.placement", graph);
         System.out.println("end.");
     }
 }
