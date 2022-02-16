@@ -1,15 +1,17 @@
 package net;
 
+import java.util.LinkedList;
+import java.util.List;
+
 enum BlockType {
-    INPUT,
-    OUTPUT,
-    LOGIC_BLOCK,
-    SUB_BLOCK
+    PAD,
+    LOGIC_BLOCK
 };
 
 public abstract class Block {
     private final String name;
     private int x, y;
+    private List<Block> connectedBlocks = new LinkedList<>();
 
     public Block(String name) {
         this.name = name;
@@ -39,6 +41,18 @@ public abstract class Block {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public List<Block> getConnectedBlocks() {
+        return connectedBlocks;
+    }
+
+    public void setConnectedBlocks(List<Block> connectedBlocks) {
+        this.connectedBlocks = connectedBlocks;
+    }
+
+    public void addConnectedBlock(Block block) {
+        this.connectedBlocks.add(block);
     }
 
     public abstract BlockType getBlockType();

@@ -15,28 +15,35 @@ public class ParsedBlock {
     static private final int SUBBLOCKS_PER_CLB = 1;
 
     private final String name;
-    private final String output;
-    private final String[] inputs;
+    private final String[] connectedBlocks;
     private final BlockType type;
 
-    private ParsedBlock(BlockType type, String name, String[] input, String output) {
+    private ParsedBlock(BlockType type, String name, String[] outIns) {
         this.type = type;
         this.name = name;
-        this.inputs = input;
-        this.output = output;
+        this.connectedBlocks = outIns;
     }
 
-    public static List<ParsedBlock> getBlockThatIsConnectedTo(List<ParsedBlock> blocks, String net) {
+    public static List<ParsedBlock> getBlocksThatAreConnectedTo(List<ParsedBlock> blocks, String[] nets) {
         Iterator<ParsedBlock> it = blocks.iterator();
         List<ParsedBlock> results = new LinkedList<>();
         ParsedBlock block;
         while (it.hasNext()) {
             block = it.next();
-            if (block.getName().equals(net)) {
+            if (ParsedBlock.contains(nets, block.getName())) {
                 results.add(block);
             }
         }
         return results;
+    }
+
+    private static boolean contains(String[] nets, String name) {
+        for (int i = 0; i < nets.length; ++i) {
+            if (nets[i] != null && nets[i].equals(name)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static List<ParsedBlock> Parse(String file) {
@@ -51,8 +58,7 @@ public class ParsedBlock {
             BlockType blockType = null;
             String blockName;
             String[] pinList;
-            String output = null;
-            String[] inputs = null;
+            String[] outIns = new String[SUBBLOCK_LUT_SIZE + 1];
 
             while (it.hasNext()) {
                 blockLine = it.next();
@@ -60,30 +66,26 @@ public class ParsedBlock {
                     blockLine = blockLine.trim().split("#")[0];
                     blockName = blockLine.split(" ")[1];
                     pinList = it.next().split(" ");
-                    if (blockLine.startsWith(".input")) {
-                        blockType = BlockType.INPUT;
-                        inputs = Arrays.copyOfRange(pinList, 1, 2);
-                        output = null;
-
-                    } else if (blockLine.startsWith(".output")) {
-                        blockType = BlockType.OUTPUT;
-                        inputs = null;
-                        output = pinList[1];
-
+                    if (blockLine.startsWith(".input") || blockLine.startsWith(".output")) {
+                        blockType = BlockType.PAD;
+                        // REVIEW Why?
+                        outIns = Arrays.copyOfRange(pinList, 1, 2);
                     } else if (blockLine.startsWith(".clb")) {
                         blockType = BlockType.LOGIC_BLOCK;
-                        inputs = new String[SUBBLOCK_LUT_SIZE];
-                        inputs[0] = pinList[1].equals("open") ? null : pinList[1];
-                        inputs[1] = pinList[2].equals("open") ? null : pinList[2];
-                        inputs[2] = pinList[3].equals("open") ? null : pinList[3];
-                        inputs[3] = pinList[4].equals("open") ? null : pinList[4];
-                        output = pinList[SUBBLOCK_LUT_SIZE + 1].equals("open") ? null : pinList[SUBBLOCK_LUT_SIZE + 1];
+                        outIns = new String[SUBBLOCK_LUT_SIZE + 1];
+                        outIns[0] = pinList[1].equals("open") ? null : pinList[1];
+                        outIns[1] = pinList[2].equals("open") ? null : pinList[2];
+                        outIns[2] = pinList[3].equals("open") ? null : pinList[3];
+                        outIns[3] = pinList[4].equals("open") ? null : pinList[4];
+                        outIns[4] = pinList[SUBBLOCK_LUT_SIZE + 1].equals("open") ? null
+                                : pinList[SUBBLOCK_LUT_SIZE + 1];
+                        // REVIEW Some Logicblocks have more then one Subblock
                         it.next();
                     } else {
                         System.err.format("Error while Parsing \"%s\"\nCould not parse line: \"%s\"", file, blockLine);
                         System.exit(1);
                     }
-                    blocks.add(new ParsedBlock(blockType, blockName, inputs, output));
+                    blocks.add(new ParsedBlock(blockType, blockName, outIns));
                 }
             }
         } catch (IOException e) {
@@ -102,12 +104,8 @@ public class ParsedBlock {
         return name;
     }
 
-    public String[] getInputs() {
-        return inputs;
-    }
-
-    public String getOutput() {
-        return output;
+    public String[] getNet() {
+        return connectedBlocks;
     }
 
 }

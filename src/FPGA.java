@@ -4,6 +4,7 @@ import java.util.Random;
 import net.Block;
 import net.Graph;
 import net.LogicBlock;
+import net.Pad;
 
 public class FPGA {
 
@@ -19,7 +20,7 @@ public class FPGA {
         this.cells = new Block[this.ROWS + this.iorat][this.COLS+ this.iorat];
         this.graph = graph;
 
-        Iterator<Block> it = this.graph.getPads().iterator();
+        Iterator<Pad> it = this.graph.getPads().iterator();
         Block pad;
         while (it.hasNext()) {
             pad = it.next();
@@ -51,7 +52,6 @@ public class FPGA {
 
         }
     }
-
 
     public Block getCell(int x, int y) {
         return this.cells[x][y];

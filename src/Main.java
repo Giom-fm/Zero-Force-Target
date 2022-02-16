@@ -21,5 +21,6 @@ public class Main {
         graph.getLogicBlocks().forEach((block) -> {
             block.getZFT();
         });
+        System.out.println("end.");
     }
 }
