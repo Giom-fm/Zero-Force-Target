@@ -2,7 +2,6 @@ package net;
 
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -11,13 +10,11 @@ public class Graph {
     private Map<String, Block> blocks;
     private Map<String, Net> nets;
 
-    public Graph(List<ParsedBlock> parsedBlocks) {
-        this.createBlocksAndNets(parsedBlocks);
-        // this.blocks = Graph.createGraphFromBlocks(blocks, parsedBlocks);
+    public Graph(List<ParsedBlock> parsedBlocks, Map<String, ParsedPlacement> parsedPads) {
+        this.createBlocksAndNets(parsedBlocks, parsedPads);
     }
 
-   
-    private void createBlocksAndNets(List<ParsedBlock> parsedBlocks) {
+    private void createBlocksAndNets(List<ParsedBlock> parsedBlocks, Map<String, ParsedPlacement> parsedPads) {
         this.blocks = new HashMap<>();
         this.nets = new HashMap<>();
 
@@ -28,7 +25,8 @@ public class Graph {
             String blockName = parsedBlock.getName();
 
             if (blockType == BlockType.INPUT) {
-                InputPad ipad = new InputPad(blockName);
+                ParsedPlacement pad = parsedPads.get(blockName);
+                InputPad ipad = new InputPad(blockName, pad.getX(), pad.getY());
                 String parsedBlockInput = parsedBlock.getInputs()[0];
                 Net net = this.nets.get(parsedBlockInput);
                 if (net == null) {
@@ -39,7 +37,8 @@ public class Graph {
                 this.blocks.put(blockName, ipad);
                 this.nets.put(parsedBlockInput, net);
             } else if (blockType == BlockType.OUTPUT) {
-                OutputPad opad = new OutputPad(blockName);
+                ParsedPlacement pad = parsedPads.get(blockName);
+                OutputPad opad = new OutputPad(blockName, pad.getX(), pad.getY());
                 String parsedBlockOutput = parsedBlock.getOutput();
                 Net net = this.nets.get(parsedBlockOutput);
                 if (net == null) {

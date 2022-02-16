@@ -6,27 +6,18 @@ import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.stream.Stream;
-
 
 public class ParsedBlock {
 
-    static final private int SUBBLOCK_LUT_SIZE = 4;
-    static final private int SUBBLOCKS_PER_CLB = 1;
+    static private final int SUBBLOCK_LUT_SIZE = 4;
+    static private final int SUBBLOCKS_PER_CLB = 1;
 
-    private String name;
-    private String output;
-    private String[] inputs;
-    private BlockType type;
-    private ParsedBlock subBlock;
-
-    private ParsedBlock(BlockType type, String name, String[] input, String output, ParsedBlock subBlock) {
-        this.type = type;
-        this.name = name;
-        this.inputs = input;
-        this.output = output;
-        this.subBlock = subBlock;
-    }
+    private final String name;
+    private final String output;
+    private final String[] inputs;
+    private final BlockType type;
 
     private ParsedBlock(BlockType type, String name, String[] input, String output) {
         this.type = type;
@@ -35,7 +26,7 @@ public class ParsedBlock {
         this.output = output;
     }
 
-    public static LinkedList<ParsedBlock> Parse(String file) {
+    public static List<ParsedBlock> Parse(String file) {
 
         Path path = Path.of(file);
         LinkedList<ParsedBlock> blocks = new LinkedList<>();
@@ -50,10 +41,6 @@ public class ParsedBlock {
             String output = null;
             String[] inputs = null;
 
-            ParsedBlock subBlock = null;
-            String subBlockLine;
-            String[] subBlockElements;
-
             while (it.hasNext()) {
                 blockLine = it.next();
                 if (!blockLine.isBlank()) {
@@ -64,12 +51,12 @@ public class ParsedBlock {
                         blockType = BlockType.INPUT;
                         inputs = Arrays.copyOfRange(pinList, 1, 2);
                         output = null;
-                        subBlock = null;
+
                     } else if (blockLine.startsWith(".output")) {
                         blockType = BlockType.OUTPUT;
                         inputs = null;
                         output = pinList[1];
-                        subBlock = null;
+
                     } else if (blockLine.startsWith(".clb")) {
                         blockType = BlockType.LOGIC_BLOCK;
                         inputs = new String[SUBBLOCK_LUT_SIZE];
@@ -78,18 +65,12 @@ public class ParsedBlock {
                         inputs[2] = pinList[3].equals("open") ? null : pinList[3];
                         inputs[3] = pinList[4].equals("open") ? null : pinList[4];
                         output = pinList[SUBBLOCK_LUT_SIZE + 1].equals("open") ? null : pinList[SUBBLOCK_LUT_SIZE + 1];
-                        // TODO Remove "open" in Subblock 
-                        subBlockLine = it.next();
-                        subBlockElements = subBlockLine.split(" ");
-                        subBlock = new ParsedBlock(BlockType.SUB_BLOCK, subBlockElements[1],
-                                Arrays.copyOfRange(subBlockElements, 2, SUBBLOCK_LUT_SIZE + 2),
-                                subBlockElements[SUBBLOCK_LUT_SIZE + 2]);
-
+                        it.next();
                     } else {
                         System.err.format("Error while Parsing \"%s\"\nCould not parse line: \"%s\"", file, blockLine);
                         System.exit(1);
                     }
-                    blocks.add(new ParsedBlock(blockType, blockName, inputs, output, subBlock));
+                    blocks.add(new ParsedBlock(blockType, blockName, inputs, output));
                 }
             }
         } catch (IOException e) {
@@ -114,10 +95,6 @@ public class ParsedBlock {
 
     public String getOutput() {
         return output;
-    }
-
-    public ParsedBlock getSubBlock() {
-        return subBlock;
     }
 
 }

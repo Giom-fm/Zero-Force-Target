@@ -1,6 +1,7 @@
 package net;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 public class Net {
@@ -17,5 +18,16 @@ public class Net {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public String toString() {
+       Iterator<Block> blocks =  this.blocks.values().iterator();
+       while(blocks.hasNext()){
+           Block block = blocks.next();
+       }
+
+
+        return null;
     }
 }

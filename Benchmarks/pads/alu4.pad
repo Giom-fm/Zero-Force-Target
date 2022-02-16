@@ -1,0 +1,27 @@
+Netlist file: ../circ/alu4.net   Architecture file: ../arch/vpr422_arch.txt
+Array size: 40 x 40 logic blocks
+
+#block name	x	y	subblk	block number
+#----------	--	--	------	------------
+i_9_		10	41	0	#0
+i_10_		0	33	0	#1
+i_7_		29	41	0	#2
+i_8_		27	0	0	#3
+i_5_		41	14	0	#4
+i_6_		0	8	0	#5
+i_3_		32	0	0	#6
+i_13_		22	41	0	#7
+i_4_		41	32	0	#8
+i_12_		0	6	0	#9
+i_1_		5	41	0	#10
+i_11_		9	0	0	#11
+i_2_		41	23	0	#12
+i_0_		11	41	0	#13
+out:o_1_	21	0	0	#14
+out:o_2_	6	41	0	#15
+out:o_0_	0	12	0	#16
+out:o_7_	17	41	0	#17
+out:o_5_	20	0	0	#18
+out:o_6_	24	0	0	#19
+out:o_3_	41	11	0	#20
+out:o_4_	0	31	0	#21

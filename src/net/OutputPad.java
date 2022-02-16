@@ -4,8 +4,8 @@ public class OutputPad extends Block {
 
     private Net output;
 
-    public OutputPad(String name) {
-        super(name);
+    public OutputPad(String name, int x, int y) {
+        super(name, x, y);
     }
 
     public Net getOutput() {

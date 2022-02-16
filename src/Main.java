@@ -1,12 +1,16 @@
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
-import net.ParsedBlock;
+import net.ParsedPlacement;
 import net.Graph;
+import net.ParsedBlock;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        List<ParsedBlock> blocks =  ParsedBlock.Parse("Benchmarks/net/alu4.net");
-        Graph graph = new Graph(blocks);
+
+        List<ParsedBlock> blocks = ParsedBlock.Parse("Benchmarks/net/alu4.net");
+        Map<String, ParsedPlacement> fixedPads = ParsedPlacement.Parse("Benchmarks/pads/alu4.pad");
+        Graph graph = new Graph(blocks, fixedPads);
     }
 }

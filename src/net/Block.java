@@ -10,22 +10,6 @@ enum BlockType {
 public abstract class Block {
     private final String name;
     private int x, y;
-    
-    
-
-    public static Block Builder(BlockType blockType, String blockName) {
-        Block block = null;
-        if (blockType == BlockType.INPUT) {
-            block = new InputPad(blockName);
-        } else if (blockType == BlockType.OUTPUT) {
-            block = new OutputPad(blockName);
-        } else if (blockType == BlockType.LOGIC_BLOCK) {
-            block = new LogicBlock(blockName);
-        } else if (blockType == BlockType.SUB_BLOCK) {
-            block = new SubBlock(blockName);
-        }
-        return block;
-    }
 
     public Block(String name) {
         this.name = name;
@@ -58,5 +42,10 @@ public abstract class Block {
     }
    
     public abstract BlockType getBlockType();
+
+    @Override
+    public String toString() {
+        return "[" + this.name + "@" + this.x + ":" + this.y + "]";
+    }
 
 }
