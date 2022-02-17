@@ -1,14 +1,3 @@
-# Platzierung
-
-* Wohe kommen Kostenfunktionen für die Verdrahtung?
-
-* Min-Cut-Verfahren
-    * Konstruktiv
-    * Revedieren von Schnitten
-        * Video 10 1:12
-        * Soll schlecht sein!
-    * Partitionierung implementieren?
-
 * KräftePlatzierung
     * Iterativ
     * Kostenfunktion über "Federn"
@@ -27,6 +16,4 @@
         6. Ermitteln der ZFT Position eines Blocks
         7. Abbruchbedingung
 
-    * Todo: 
-        * ToString implementieren
 

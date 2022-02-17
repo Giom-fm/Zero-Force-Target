@@ -3,14 +3,9 @@ package net;
 import java.util.LinkedList;
 import java.util.List;
 
-enum BlockType {
-    PAD,
-    LOGIC_BLOCK
-};
-
 public abstract class Block {
     private final String name;
-    private int x, y;
+    private int x = 0, y = 0;
     private List<Block> connectedBlocks = new LinkedList<>();
 
     public Block(String name) {
@@ -37,6 +32,15 @@ public abstract class Block {
 
     public void setX(int x) {
         this.x = x;
+    }
+
+    public Coord getPosition() {
+        return new Coord(this.x, this.y);
+    }
+
+    public void setPosition(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 
     public void setY(int y) {
