@@ -10,8 +10,8 @@ public class Main {
 
     private static final int ROWS = 40;
     private static final int COLS = 40;
-    private static final int MAX_SUB_ITERATIONS = 100;
-    private static final int MAX_ITERATIONS = 1000;
+    private static final int MAX_SUB_ITERATIONS = 10;
+    private static final int MAX_ITERATIONS = 10000;
 
     public static void main(String[] args) throws IOException {
 

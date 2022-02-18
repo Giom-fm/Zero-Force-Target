@@ -1,9 +1,9 @@
 package net;
 
-public class Coord {
+public class Pos2D {
     private int x, y;
 
-    public Coord(int x, int y) {
+    public Pos2D(int x, int y) {
         this.x = x;
         this.y = y;
     }
@@ -31,8 +31,8 @@ public class Coord {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj != null && obj instanceof Coord) {
-            Coord coord = (Coord) obj;
+        if (obj != null && obj instanceof Pos2D) {
+            Pos2D coord = (Pos2D) obj;
             return coord.getX() == this.x && coord.getY() == this.y;
         }
         return false;

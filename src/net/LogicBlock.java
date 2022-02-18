@@ -11,7 +11,7 @@ public class LogicBlock extends Block {
         super(name);
     }
 
-    public Coord getZFT() {
+    public Pos2D getZFT() {
         List<Block> blocks = this.getConnectedBlocks();
         Iterator<Block> it = blocks.iterator();
         double x0_numerator = 0, y0_numerator = 0;
@@ -21,13 +21,13 @@ public class LogicBlock extends Block {
 
         while (it.hasNext()) {
             block = it.next();
-            Coord position = block.getPosition();
+            Pos2D position = block.getPosition();
             x0_numerator += K * position.getX();
             y0_numerator += K * position.getY();
         }
         x0 = (int) Math.round(x0_numerator / weightSum);
         y0 = (int) Math.round(y0_numerator / weightSum);
-        return new Coord(x0, y0);
+        return new Pos2D(x0, y0);
     }
 
     @Override
