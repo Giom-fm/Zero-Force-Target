@@ -5,7 +5,7 @@ import java.util.List;
 
 public abstract class Block {
     private final String name;
-    private int x = 0, y = 0;
+    private Coord position;
     private List<Block> connectedBlocks = new LinkedList<>();
 
     public Block(String name) {
@@ -14,37 +14,19 @@ public abstract class Block {
 
     public Block(String name, int x, int y) {
         this.name = name;
-        this.x = x;
-        this.y = y;
+        this.position = new Coord(x, y);
     }
 
     public String getName() {
         return name;
     }
 
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
     public Coord getPosition() {
-        return new Coord(this.x, this.y);
+        return this.position;
     }
 
-    public void setPosition(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
+    public void setPosition(Coord coord) {
+        this.position = coord;
     }
 
     public List<Block> getConnectedBlocks() {
@@ -63,7 +45,7 @@ public abstract class Block {
 
     @Override
     public String toString() {
-        return this.name + "\t\t\t" + this.x + "\t" + this.y + "\n";
+        return this.name + "\t\t\t" + this.position.getX() + "\t" + this.position.getY() + "\t0" + "\n";
     }
 
     @Override

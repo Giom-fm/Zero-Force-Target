@@ -8,7 +8,7 @@ public class Coord {
         this.y = y;
     }
 
-    public void setPosition(int x, int y){
+    public void setPosition(int x, int y) {
         this.x = x;
         this.y = y;
     }
@@ -27,6 +27,15 @@ public class Coord {
 
     public int getY() {
         return y;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj != null && obj instanceof Coord) {
+            Coord coord = (Coord) obj;
+            return coord.getX() == this.x && coord.getY() == this.y;
+        }
+        return false;
     }
 
 }

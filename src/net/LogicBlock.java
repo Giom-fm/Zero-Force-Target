@@ -6,7 +6,7 @@ import java.util.List;
 public class LogicBlock extends Block {
 
     private static final int K = 1;
-    
+
     public LogicBlock(String name) {
         super(name);
     }
@@ -21,8 +21,9 @@ public class LogicBlock extends Block {
 
         while (it.hasNext()) {
             block = it.next();
-            x0_numerator += K * block.getX();
-            y0_numerator += K * block.getY();
+            Coord position = block.getPosition();
+            x0_numerator += K * position.getX();
+            y0_numerator += K * position.getY();
         }
         x0 = (int) Math.round(x0_numerator / weightSum);
         y0 = (int) Math.round(y0_numerator / weightSum);

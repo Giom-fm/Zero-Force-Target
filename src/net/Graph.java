@@ -107,6 +107,11 @@ public class Graph {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
+        builder.append("Netlist file: dummy\tArchitecture file: dummy\n");
+        builder.append("Array size: 40 x 40 logic blocks\n\n");
+        builder.append("#block name	x	y	subblk	block number\n");
+        builder.append("#----------	--	--	------	------------\n");
+
         this.blocks.values().forEach((block) -> {
             builder.append(block.toString());
         });
