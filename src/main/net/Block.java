@@ -1,4 +1,4 @@
-package net;
+package main.net;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -6,16 +6,16 @@ import java.util.List;
 
 public abstract class Block {
     private final String name;
-    private Pos2D position;
+    private Pos2D position = new Pos2D(0, 0);
     private List<Block> connectedBlocks = new LinkedList<>();
 
     public Block(String name) {
         this.name = name;
     }
 
-    public Block(String name, int x, int y) {
+    public Block(String name, Pos2D pos) {
         this.name = name;
-        this.position = new Pos2D(x, y);
+        this.position = pos;
     }
 
     public double calcForceToBlocksFrom(Pos2D currentPos) {
@@ -42,8 +42,8 @@ public abstract class Block {
         return this.position;
     }
 
-    public void setPosition(Pos2D coord) {
-        this.position = coord;
+    public void setPosition(Pos2D pos) {
+        this.position = pos;
     }
 
     public List<Block> getConnectedBlocks() {
@@ -67,7 +67,11 @@ public abstract class Block {
 
     @Override
     public boolean equals(Object obj) {
-        return obj != null && obj instanceof Block && this.name.equals(((Block) obj).getName());
+        Block block = (Block) obj;
+        return obj != null
+                && obj instanceof Block
+                && this.name.equals(block.getName())
+                && this.position.equals(block.getPosition());
     }
 
 }

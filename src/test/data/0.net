@@ -1,0 +1,31 @@
+.input i_0
+pinlist: i_0
+
+.input i_1
+pinlist: i_1
+
+.input i_2
+pinlist: i_2
+
+.output o_0
+pinlist: o_0 
+
+.output o_1
+pinlist: o_1 
+
+.output o_2
+pinlist: o_2
+
+.clb clb0
+pinlist: i_0 i_1 i_2 open o_0 open
+subblock: o 0 1 2 3 4 open 
+
+.clb clb1
+pinlist: open i_0 i_2 open o_1 open
+subblock: o 0 1 2 3 4 open 
+
+.clb clb2
+pinlist: i_3 open i_2 open o_2 open
+subblock: o 0 1 2 3 4 open 
+
+

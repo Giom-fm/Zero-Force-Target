@@ -1,4 +1,4 @@
-package net;
+package main.net;
 
 import java.util.Iterator;
 import java.util.List;
@@ -9,6 +9,10 @@ public class LogicBlock extends Block {
 
     public LogicBlock(String name) {
         super(name);
+    }
+
+    public LogicBlock(String name, Pos2D pos) {
+        super(name, pos);
     }
 
     public Pos2D getZFT() {
@@ -33,5 +37,14 @@ public class LogicBlock extends Block {
     @Override
     public BlockType getBlockType() {
         return BlockType.LOGIC_BLOCK;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        Block block = (Block) obj;
+        return obj != null
+                && obj instanceof LogicBlock
+                && this.getName().equals(block.getName())
+                && this.getPosition().equals(block.getPosition());
     }
 }

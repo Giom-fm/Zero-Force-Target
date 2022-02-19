@@ -1,4 +1,4 @@
-package net;
+package main.net;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -27,7 +27,7 @@ public class Graph {
         this.connectBlocks(parsedBlocks);
     }
 
-    public void createBlocks(List<ParsedBlock> parsedBlocks, Map<String, ParsedPlacement> parsedPads) {
+    private void createBlocks(List<ParsedBlock> parsedBlocks, Map<String, ParsedPlacement> parsedPads) {
 
         this.blocks = new HashMap<>();
 
@@ -44,7 +44,7 @@ public class Graph {
 
             if (blockType == BlockType.PAD) {
                 ParsedPlacement parsedPad = parsedPads.get(blockName);
-                newBlock = new Pad(blockName, parsedPad.getX(), parsedPad.getY());
+                newBlock = new Pad(blockName, new Pos2D(parsedPad.getX(), parsedPad.getY()));
             } else if (blockType == BlockType.LOGIC_BLOCK) {
                 newBlock = new LogicBlock(blockName);
             } else {

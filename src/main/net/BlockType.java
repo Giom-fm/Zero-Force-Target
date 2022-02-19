@@ -1,4 +1,4 @@
-package net;
+package main.net;
 
 public enum BlockType {
     PAD,

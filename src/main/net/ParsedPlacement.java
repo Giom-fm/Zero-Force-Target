@@ -1,4 +1,4 @@
-package net;
+package main.net;
 
 import java.io.IOException;
 import java.nio.file.Files;
