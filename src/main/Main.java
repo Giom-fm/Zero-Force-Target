@@ -13,7 +13,7 @@ public class Main {
     private static final int ROWS = 40;
     private static final int COLS = 40;
     private static final int MAX_RIPPLE_ITERATIONS = 10;
-    private static final int MAX_ITERATIONS = 100;
+    private static final int MAX_ITERATIONS = 10000;
     private static final int IO_RAT = 2;
 
     public static void main(String[] args) throws IOException {

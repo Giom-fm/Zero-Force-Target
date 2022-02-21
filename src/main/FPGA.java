@@ -43,41 +43,47 @@ public class FPGA {
         int rippleIterations = 0;
 
         // REVIEW Add pad positions to global locked cells
+        // REVIEW Parsing from block is wrong. Not all inputs are shown
         it = logicBlocks.iterator();
         while (maxIterations > 0) {
             if (!it.hasNext()) {
                 it = logicBlocks.iterator();
             }
-            LogicBlock currentCell = it.next();
-
-            Pos2D targetPosition = currentCell.getZFT();
             boolean rippleDone = false;
+            LogicBlock currentCell = it.next();
+            Pos2D targetPosition = currentCell.getZFT();
+            this.removeCell(currentCell.getPosition());
             while (rippleDone == false) {
+              
+                if (!validatePos(targetPosition)) {
+                    targetPosition = this.getBestAvailPosNearBy(currentCell, targetPosition, lockedPositions);
+                }
                 Block targetCell = this.getCellByPos(targetPosition);
-                if (currentCell.getPosition().equals(targetPosition)) {
-                    rippleIterations = 0;
-                    rippleDone = true;
-                } else if (lockedPositions.contains(targetPosition)) {
+                if (lockedPositions.contains(targetPosition)) {
+                    targetPosition = this.getBestAvailPosNearBy(currentCell, targetPosition, lockedPositions);
                     rippleIterations++;
                     if (rippleIterations >= maxRippleIterations) {
                         lockedPositions.clear();
                         maxIterations--;
+                        targetPosition = this.getBestFreePosNearBy(currentCell, targetPosition, lockedPositions);
+                        this.setCell(currentCell, targetPosition);
                         rippleDone = true;
-                    } else {
-                        targetPosition = this.getBestPosNearBy(currentCell, targetPosition, lockedPositions, true);
-                        lockedPositions.add(targetPosition);
-                    }
-                } else if (!validatePos(targetPosition)) {
-                    targetPosition = this.getBestPosNearBy(currentCell, targetPosition, lockedPositions, true);
+                    }                  
+                } else if (currentCell.getPosition().equals(targetPosition)) {
+                    this.setCell(currentCell, targetPosition);
+                    lockedPositions.add(targetPosition);
+                    rippleIterations = 0;
+                    rippleDone = true;
                 } else if (targetCell == null) {
-                    this.moveCell(currentCell.getPosition(), targetPosition);
+                    this.setCell(currentCell, targetPosition);
                     lockedPositions.add(targetPosition);
                     rippleDone = true;
                     rippleIterations = 0;
                 } else if (targetCell.getBlockType() == BlockType.LOGIC_BLOCK) {
-                    this.swapCells(currentCell, targetCell);
+                    this.setCell(currentCell, targetPosition);
                     lockedPositions.add(targetPosition);
                     currentCell = (LogicBlock) targetCell;
+                    currentCell.setPosition(Block.INIT_POSITION);
                     targetPosition = currentCell.getZFT();
                     rippleIterations = 0;
                 }
@@ -92,6 +98,14 @@ public class FPGA {
                 && pos.getX() <= this.ROWS
                 && pos.getY() > 0
                 && pos.getY() <= this.COLS;
+    }
+
+    public Pos2D getBestFreePosNearBy(Block currentBlock, Pos2D targetPosition, Set<Pos2D> lockedCells) {
+        return this.getBestPosNearBy(currentBlock, targetPosition, lockedCells, false);
+    }
+
+    public Pos2D getBestAvailPosNearBy(Block currentBlock, Pos2D targetPosition, Set<Pos2D> lockedCells) {
+        return this.getBestPosNearBy(currentBlock, targetPosition, lockedCells, true);
     }
 
     public Pos2D getBestPosNearBy(Block currentBlock, Pos2D targetPosition, Set<Pos2D> lockedCells,
