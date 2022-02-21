@@ -1,0 +1,11 @@
+Netlist file: dummy	Architecture file: dummy
+Array size: 3 x 3 logic blocks
+
+#block name	x	y	subblk	block number
+#----------	--	--	------	------------
+i_01		0	1	0
+i_10		1	0	0
+i_2			0	3	0
+o_0			4	1	0
+o_1			4	2	0
+o_2			4	3	0
