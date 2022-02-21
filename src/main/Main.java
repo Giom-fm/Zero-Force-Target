@@ -12,8 +12,8 @@ public class Main {
 
     private static final int ROWS = 40;
     private static final int COLS = 40;
-    private static final int MAX_SUB_ITERATIONS = 10;
-    private static final int MAX_ITERATIONS = 1000000;
+    private static final int MAX_RIPPLE_ITERATIONS = 10;
+    private static final int MAX_ITERATIONS = 100;
     private static final int IO_RAT = 2;
 
     public static void main(String[] args) throws IOException {
@@ -21,10 +21,12 @@ public class Main {
         Map<String, ParsedPlacement> fixedPads = ParsedPlacement.Parse("Benchmarks/pads/alu4.pad");
         Graph graph = new Graph(blocks, fixedPads);
         FPGA fpga = new FPGA(graph, ROWS, COLS, IO_RAT);
+        //fpga.initPlace();
         fpga.placeRandom();
-        fpga.rippleMove(MAX_ITERATIONS, MAX_SUB_ITERATIONS);
+        fpga.rippleMove(MAX_ITERATIONS, MAX_RIPPLE_ITERATIONS);
         Graph.WriteToFile("./out/output0.place", graph);
         System.out.println("end.");
     }
 
 }
+//7491.522

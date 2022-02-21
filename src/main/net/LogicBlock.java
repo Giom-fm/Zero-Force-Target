@@ -5,8 +5,6 @@ import java.util.List;
 
 public class LogicBlock extends Block {
 
-    private static final int K = 1;
-
     public LogicBlock(String name) {
         super(name);
     }
@@ -16,22 +14,30 @@ public class LogicBlock extends Block {
     }
 
     public Pos2D getZFT() {
+        // REVIEW Block weight
         List<Block> blocks = this.getConnectedBlocks();
         Iterator<Block> it = blocks.iterator();
         double x0_numerator = 0, y0_numerator = 0;
-        int x0, y0;
-        double weightSum = blocks.size() * K;
-        Block block;
+        double weightSum = 0;
 
         while (it.hasNext()) {
-            block = it.next();
-            Pos2D position = block.getPosition();
-            x0_numerator += K * position.getX();
-            y0_numerator += K * position.getY();
+            Block block = it.next();
+            if (!block.getPosition().equals(Block.INIT_POSITION)) {
+                Pos2D position = block.getPosition();
+                x0_numerator += position.getX();
+                y0_numerator += position.getY();
+                weightSum += 1;
+            }
+
         }
-        x0 = (int) Math.round(x0_numerator / weightSum);
-        y0 = (int) Math.round(y0_numerator / weightSum);
-        return new Pos2D(x0, y0);
+        if (x0_numerator > 0 || y0_numerator > 0) {
+            int x0 = (int) Math.round(x0_numerator / weightSum);
+            int y0 = (int) Math.round(y0_numerator / weightSum);
+            return new Pos2D(x0, y0);
+        } else {
+            return Block.INIT_POSITION;
+        }
+
     }
 
     @Override

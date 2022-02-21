@@ -3,7 +3,7 @@ package main.net;
 public class Pos2D {
     private int x, y;
 
-    public Pos2D(Pos2D pos){
+    public Pos2D(Pos2D pos) {
         this.x = pos.getX();
         this.y = pos.getY();
     }
@@ -32,6 +32,13 @@ public class Pos2D {
 
     public int getY() {
         return y;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        return Integer
+                .parseInt(Integer.toString(this.getX()) + Integer.toString(prime) + Integer.toString(this.getY()));
     }
 
     @Override

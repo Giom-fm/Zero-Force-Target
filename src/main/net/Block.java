@@ -6,7 +6,9 @@ import java.util.List;
 
 public abstract class Block {
     private final String name;
-    private Pos2D position = new Pos2D(0, 0);
+    protected static final int K = 1;
+    public static final Pos2D INIT_POSITION = new Pos2D(-1, -1);
+    private Pos2D position = new Pos2D(Block.INIT_POSITION);
     private List<Block> connectedBlocks = new LinkedList<>();
 
     public Block(String name) {
@@ -31,7 +33,7 @@ public abstract class Block {
 
     // REVIEW K?
     private static double calculateForce(Pos2D posA, Pos2D posB) {
-        return Math.sqrt(Math.pow(posA.getX() - posB.getX(), 2) + Math.pow(posA.getY() - posB.getY(), 2));
+        return K * (Math.sqrt(Math.pow(posA.getX() - posB.getX(), 2) + Math.pow(posA.getY() - posB.getY(), 2)));
     }
 
     public String getName() {

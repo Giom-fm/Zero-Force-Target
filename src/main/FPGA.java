@@ -1,9 +1,11 @@
 package main;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import main.net.Block;
 import main.net.BlockType;
@@ -20,89 +22,82 @@ public class FPGA {
     private final int COLS;
     private Block[][] cells;
 
-    private Pos2D debug = new Pos2D(7, 41);
-
-    // TODO IO_RAT not the size of Matrix
+    // REVIEW IO_RAT
     public FPGA(Graph graph, int rows, int cols, int io_rat) {
         this.ROWS = rows;
         this.COLS = cols;
         this.iorat = io_rat;
-        this.cells = new Block[this.ROWS + 2][this.COLS + 2];
+        this.cells = new Block[this.COLS + 2][this.ROWS + 2];
         this.graph = graph;
-        Iterator<Pad> it = this.graph.getPads().iterator();
+        Iterator<Pad> it = this.graph.getSortedPads().iterator();
         while (it.hasNext()) {
             Block pad = it.next();
             this.setCell(pad, pad.getPosition());
         }
     }
 
-    public void rippleMove(int maxIterations, int maxSubIterations) {
-        List<LogicBlock> logicBlocks = this.graph.getLogicBlocks();
+    public void rippleMove(int maxIterations, int maxRippleIterations) {
+        List<LogicBlock> logicBlocks = this.graph.getSortedLogicBlocks();
         Iterator<LogicBlock> it = logicBlocks.iterator();
-        List<Pos2D> iterationLockedCells = new LinkedList<>();
-        List<Pos2D> globalLockedCells = new LinkedList<>();
+        Set<Pos2D> lockedPositions = new HashSet<>();
+        int rippleIterations = 0;
 
-        while (maxIterations-- > 0) {
-            // REVIEW Add pad positions to global locked cells
-            globalLockedCells.clear();
-            while (it.hasNext()) {
-                LogicBlock currentCell = it.next();
-                Pos2D targetPosition = currentCell.getZFT();
-                int subIteration = maxSubIterations;
-                boolean done = false;
-                iterationLockedCells.clear();
+        // REVIEW Add pad positions to global locked cells
+        it = logicBlocks.iterator();
+        while (maxIterations > 0) {
+            if (!it.hasNext()) {
+                it = logicBlocks.iterator();
+            }
+            LogicBlock currentCell = it.next();
 
-                // REVIEW IO_RAT
-
-                while (done == false) {
-
-                    Block targetCell = this.getCell(targetPosition);
-
-                    if (currentCell.getPosition().equals(targetPosition)) {
-                        // Already best position -> lock cell
-                        globalLockedCells.add(targetPosition);
-                        done = true;
+            Pos2D targetPosition = currentCell.getZFT();
+            boolean rippleDone = false;
+            while (rippleDone == false) {
+                Block targetCell = this.getCellByPos(targetPosition);
+                if (currentCell.getPosition().equals(targetPosition)) {
+                    rippleIterations = 0;
+                    rippleDone = true;
+                } else if (lockedPositions.contains(targetPosition)) {
+                    rippleIterations++;
+                    if (rippleIterations >= maxRippleIterations) {
+                        lockedPositions.clear();
+                        maxIterations--;
+                        rippleDone = true;
                     } else {
-                        if (subIteration <= 0 || iterationLockedCells.contains(targetPosition)
-                                || !validatePos(targetPosition)) {
-
-                            List<Pos2D> lockedCells = new LinkedList<>(globalLockedCells);
-                            lockedCells.addAll(iterationLockedCells);
-                            targetPosition = this.getBestCellNearBy(currentCell, targetPosition, lockedCells,
-                                    subIteration > 0);
-                            targetCell = this.getCell(targetPosition);
-                        }
-                        if (targetCell == null) {
-                            // Target cell is empty -> set current block to it
-                            this.moveCell(currentCell.getPosition(), targetPosition);
-                            done = true;
-                        } else if (targetCell.getBlockType() == BlockType.LOGIC_BLOCK) {
-                            // Target cell is occupied by logic block -> replace it and search new position
-                            // for next block
-                            // if zft-position is locked search an new position
-                            this.swapCells(currentCell, targetCell);
-                            iterationLockedCells.add(targetPosition);
-                            currentCell = (LogicBlock) targetCell;
-                            targetPosition = currentCell.getZFT();
-                        }
+                        targetPosition = this.getBestPosNearBy(currentCell, targetPosition, lockedPositions, true);
+                        lockedPositions.add(targetPosition);
                     }
-                    --subIteration;
+                } else if (!validatePos(targetPosition)) {
+                    targetPosition = this.getBestPosNearBy(currentCell, targetPosition, lockedPositions, true);
+                } else if (targetCell == null) {
+                    this.moveCell(currentCell.getPosition(), targetPosition);
+                    lockedPositions.add(targetPosition);
+                    rippleDone = true;
+                    rippleIterations = 0;
+                } else if (targetCell.getBlockType() == BlockType.LOGIC_BLOCK) {
+                    this.swapCells(currentCell, targetCell);
+                    lockedPositions.add(targetPosition);
+                    currentCell = (LogicBlock) targetCell;
+                    targetPosition = currentCell.getZFT();
+                    rippleIterations = 0;
                 }
+
             }
         }
+
     }
 
-    public boolean validatePos(Pos2D coord) {
-        return coord.getX() > 0
-                && coord.getX() <= this.ROWS
-                && coord.getY() > 0
-                && coord.getY() <= this.COLS;
+    public boolean validatePos(Pos2D pos) {
+        return pos.getX() > 0
+                && pos.getX() <= this.ROWS
+                && pos.getY() > 0
+                && pos.getY() <= this.COLS;
     }
 
-    public Pos2D getBestCellNearBy(Block currentBlock, Pos2D targetPosition, List<Pos2D> lockedCells,
+    public Pos2D getBestPosNearBy(Block currentBlock, Pos2D targetPosition, Set<Pos2D> lockedCells,
             boolean getLogicBlock) {
 
-        List<Pos2D> nearByCoords = getNearByPositions(targetPosition, lockedCells, getLogicBlock);
+        List<Pos2D> nearByCoords = getPosNearBy(targetPosition, lockedCells, getLogicBlock);
         double bestForce = Double.MAX_VALUE;
         Pos2D bestPos = targetPosition;
         Iterator<Pos2D> it = nearByCoords.iterator();
@@ -118,7 +113,7 @@ public class FPGA {
         return bestPos;
     }
 
-    public List<Pos2D> getNearByPositions(Pos2D coord, List<Pos2D> lockedCells, boolean getLogicBlock) {
+    public List<Pos2D> getPosNearBy(Pos2D coord, Set<Pos2D> lockedCells, boolean getLogicBlock) {
         int i = coord.getX(), j = coord.getY();
         int depth = 0;
         List<Pos2D> coords = new LinkedList<>();
@@ -129,7 +124,7 @@ public class FPGA {
                 for (int y = Math.max(1, j - depth); y <= Math.min(j + depth, this.COLS); ++y) {
                     if (x != i || y != j) {
                         Pos2D pos = new Pos2D(x, y);
-                        Block cell = this.getCell(pos);
+                        Block cell = this.getCellByPos(pos);
                         if ((cell == null) || getLogicBlock && cell != null && !lockedCells.contains(pos)) {
                             coords.add(pos);
                         }
@@ -144,20 +139,18 @@ public class FPGA {
     public void placeRandom() {
         Random rand = new Random();
         rand.setSeed(123456789);
-        Iterator<LogicBlock> it = this.graph.getLogicBlocks().iterator();
+        Iterator<LogicBlock> it = this.graph.getSortedLogicBlocks().iterator();
         int x, y;
         boolean found;
         LogicBlock logicBlock;
-
+        // int XBound = this.COLS - 1 + 1
         while (it.hasNext()) {
             logicBlock = it.next();
             found = false;
-
             while (found == false) {
-                // REVIEW nextInt could return some Pad positions that are locked for logic
-                // blocks
-                x = rand.nextInt(this.ROWS);
-                y = rand.nextInt(this.COLS);
+                x = rand.nextInt(this.COLS) + 1;
+                y = rand.nextInt(this.ROWS) + 1;
+
                 Pos2D pos = new Pos2D(x, y);
                 if (this.isCellEmpty(pos)) {
                     this.setCell(logicBlock, pos);
@@ -168,8 +161,37 @@ public class FPGA {
         }
     }
 
-    public Block getCell(Pos2D pos) {
+    public void initPlace() {
+        List<LogicBlock> blocks = this.graph.getSortedLogicBlocks();
+        Iterator<LogicBlock> it = blocks.iterator();
+        int unset_counter = blocks.size();
+        Set<Pos2D> lockedCells = new HashSet<>();
+
+        while (unset_counter > 0) {
+            if (!it.hasNext()) {
+                it = blocks.iterator();
+            }
+            LogicBlock currentCell = it.next();
+            if (currentCell.getPosition().equals(Block.INIT_POSITION)) {
+                Pos2D targetPosition = currentCell.getZFT();
+                if (!targetPosition.equals(Block.INIT_POSITION)) {
+                    Block targetCell = this.getCellByPos(targetPosition);
+                    if (targetCell != null || !this.validatePos(targetPosition)) {
+                        targetPosition = this.getBestPosNearBy(currentCell, targetPosition, lockedCells, false);
+                    }
+                    this.setCell(currentCell, targetPosition);
+                    unset_counter--;
+                }
+            }
+        }
+    }
+
+    public Block getCellByPos(Pos2D pos) {
         return this.cells[pos.getX()][pos.getY()];
+    }
+
+    public Block getCellByName(String name) {
+        return this.graph.getBlock(name);
     }
 
     public void setCell(Block block, Pos2D pos) {
@@ -194,7 +216,7 @@ public class FPGA {
     }
 
     public void moveCell(Pos2D posFrom, Pos2D posTo) {
-        Block blockA = this.getCell(posFrom);
+        Block blockA = this.getCellByPos(posFrom);
         this.removeCell(posFrom);
         this.setCell(blockA, posTo);
     }

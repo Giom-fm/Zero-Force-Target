@@ -66,7 +66,8 @@ public class Graph {
             parsedBlock = it.next();
             blockName = parsedBlock.getName();
             Block block = this.blocks.get(blockName);
-            List<ParsedBlock> net = ParsedBlock.getBlocksThatAreConnectedTo(parsedBlocks, parsedBlock.getNet());
+            List<ParsedBlock> net = ParsedBlock.getBlocksThatAreConnectedTo(parsedBlocks, parsedBlock.getInputs(),
+                    parsedBlock.getOutputs());
             Iterator<ParsedBlock> jt = net.iterator();
 
             while (jt.hasNext()) {
@@ -76,7 +77,6 @@ public class Graph {
                     block.addConnectedBlock(connectedBlock);
                 }
             }
-
         }
     }
 
@@ -84,17 +84,48 @@ public class Graph {
         return blocks;
     }
 
-    public List<LogicBlock> getLogicBlocks() {
+    public List<LogicBlock> getSortedLogicBlocks() {
         return this.blocks.values().stream().filter((block) -> {
             return block.getBlockType() == BlockType.LOGIC_BLOCK;
+        }).sorted((a, b) -> {
+            int sizeA = a.getConnectedBlocks().size();
+            int sizeB = b.getConnectedBlocks().size();
+            return sizeB - sizeA;
         }).map((block) -> {
             return (LogicBlock) block;
         }).collect(Collectors.toCollection(LinkedList::new));
     }
 
-    public List<Pad> getPads() {
+    public List<LogicBlock> getSortedByPadLogicBlocks() {
+        return this.blocks.values().stream().filter((block) -> {
+            return block.getBlockType() == BlockType.LOGIC_BLOCK;
+        }).filter((block) -> {
+            Iterator<Block> it = block.getConnectedBlocks().iterator();
+            int counter = 0;
+            boolean filter = false;
+            while(it.hasNext() && !filter){
+                if(it.next().getBlockType() == BlockType.PAD){
+                    counter++;
+                }
+                filter = counter < 2;
+            }
+            return filter;
+        }).sorted((a, b) -> {
+            int sizeA = a.getConnectedBlocks().size();
+            int sizeB = b.getConnectedBlocks().size();
+            return sizeB - sizeA;
+        }).map((block) -> {
+            return (LogicBlock) block;
+        }).collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    public List<Pad> getSortedPads() {
         return this.blocks.values().stream().filter((block) -> {
             return block.getBlockType() == BlockType.PAD;
+        }).sorted((a, b) -> {
+            int sizeA = a.getConnectedBlocks().size();
+            int sizeB = b.getConnectedBlocks().size();
+            return sizeB - sizeA;
         }).map((block) -> {
             return (Pad) block;
         }).collect(Collectors.toCollection(LinkedList::new));
