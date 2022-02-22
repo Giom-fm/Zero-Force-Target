@@ -11,12 +11,13 @@ import java.util.stream.Stream;
 public class ParsedPlacement {
 
     private final String name;
-    private final int x, y;
+    private final int x, y, subblock;
 
-    private ParsedPlacement(String name, int x, int y) {
+    private ParsedPlacement(String name, int x, int y, int subblock) {
         this.name = name;
         this.x = x;
         this.y = y;
+        this.subblock = subblock;
     }
 
     public static Map<String, ParsedPlacement> Parse(String file) {
@@ -30,7 +31,6 @@ public class ParsedPlacement {
             String line;
             String[] elems = null;
             String padName;
-            int x = 0, y = 0;
 
             while (it.hasNext()) {
                 line = it.next();
@@ -38,9 +38,10 @@ public class ParsedPlacement {
                         && !line.startsWith("Array size:")) {
                     elems = line.replaceAll("\t+", " ").split(" ");
                     padName = elems[0];
-                    x = Integer.parseInt(elems[1]);
-                    y = Integer.parseInt(elems[2]);
-                    pads.put(padName, new ParsedPlacement(padName, x, y));
+                    int x = Integer.parseInt(elems[1]);
+                    int y = Integer.parseInt(elems[2]);
+                    int subblock = Integer.parseInt(elems[3]);
+                    pads.put(padName, new ParsedPlacement(padName, x, y, subblock));
                 }
             }
         } catch (IOException e) {
@@ -61,6 +62,10 @@ public class ParsedPlacement {
 
     public int getY() {
         return y;
+    }
+
+    public int getSubblock() {
+        return subblock;
     }
 
 }

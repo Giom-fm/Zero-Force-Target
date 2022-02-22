@@ -2,8 +2,11 @@ package main.net;
 
 public class Pad extends Block {
 
-    public Pad(String name, Pos2D pos) {
+    private final int subblock;
+
+    public Pad(String name, Pos2D pos, int subblock) {
         super(name, pos);
+        this.subblock = subblock;
     }
 
     @Override
@@ -18,5 +21,10 @@ public class Pad extends Block {
                 && obj instanceof Pad
                 && this.getName().equals(block.getName())
                 && this.getPosition().equals(block.getPosition());
+    }
+
+    @Override
+    public String toString() {
+        return this.name + "\t\t\t" + this.position.getX() + "\t" + this.position.getY() + "\t" + this.subblock + "\n";
     }
 }

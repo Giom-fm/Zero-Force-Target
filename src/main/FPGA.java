@@ -1,5 +1,8 @@
 package main;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -33,6 +36,14 @@ public class FPGA {
         while (it.hasNext()) {
             Block pad = it.next();
             this.setCell(pad, pad.getPosition());
+        }
+    }
+
+    public static void WriteToFile(String path, FPGA fpga) {
+        try {
+            Files.writeString(Paths.get(path), fpga.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -233,6 +244,18 @@ public class FPGA {
         Block blockA = this.getCellByPos(posFrom);
         this.removeCell(posFrom);
         this.setCell(blockA, posTo);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Netlist file: dummy\tArchitecture file: dummy\n");
+        builder.append("Array size: " + this.ROWS+  " x "+ this.COLS +" logic blocks\n\n");
+        builder.append("#block name	x	y	subblk	block number\n");
+        builder.append("#----------	--	--	------	------------\n");
+        builder.append(this.graph.toString());
+
+        return builder.toString();
     }
 
 }

@@ -5,10 +5,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 public abstract class Block {
-    private final String name;
+    protected final String name;
     protected static final int K = 1;
     public static final Pos2D INIT_POSITION = new Pos2D(-1, -1);
-    private Pos2D position = new Pos2D(Block.INIT_POSITION);
+    protected Pos2D position = new Pos2D(Block.INIT_POSITION);
     private List<Block> connectedBlocks = new LinkedList<>();
 
     public Block(String name) {

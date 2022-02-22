@@ -14,13 +14,7 @@ public class Graph {
 
     private Map<String, Block> blocks;
 
-    public static void WriteToFile(String path, Graph graph) {
-        try {
-            Files.writeString(Paths.get(path), graph.toString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+   
 
     public Graph(List<ParsedBlock> parsedBlocks, Map<String, ParsedPlacement> parsedPads) {
         this.createBlocks(parsedBlocks, parsedPads);
@@ -44,7 +38,7 @@ public class Graph {
 
             if (blockType == BlockType.PAD) {
                 ParsedPlacement parsedPad = parsedPads.get(blockName);
-                newBlock = new Pad(blockName, new Pos2D(parsedPad.getX(), parsedPad.getY()));
+                newBlock = new Pad(blockName, new Pos2D(parsedPad.getX(), parsedPad.getY()), parsedPad.getSubblock());
             } else if (blockType == BlockType.LOGIC_BLOCK) {
                 newBlock = new LogicBlock(blockName);
             } else {
@@ -103,8 +97,8 @@ public class Graph {
             Iterator<Block> it = block.getConnectedBlocks().iterator();
             int counter = 0;
             boolean filter = false;
-            while(it.hasNext() && !filter){
-                if(it.next().getBlockType() == BlockType.PAD){
+            while (it.hasNext() && !filter) {
+                if (it.next().getBlockType() == BlockType.PAD) {
                     counter++;
                 }
                 filter = counter < 2;
@@ -138,11 +132,6 @@ public class Graph {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("Netlist file: dummy\tArchitecture file: dummy\n");
-        builder.append("Array size: 40 x 40 logic blocks\n\n");
-        builder.append("#block name	x	y	subblk	block number\n");
-        builder.append("#----------	--	--	------	------------\n");
-
         this.blocks.values().forEach((block) -> {
             builder.append(block.toString());
         });
