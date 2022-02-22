@@ -25,14 +25,15 @@ public class Main {
                 "elliptic", "ex5p", "ex1010", "frisc", "misex3", "pdc", "s298", "s38417", "s38584.1", "seq", "spla",
                 "tseng" };
 
-        List<ParsedBlock> blocks = ParsedBlock.Parse("Benchmarks/net/apex2.net");
-        Map<String, ParsedPlacement> fixedPads = ParsedPlacement.Parse("Benchmarks/pads/apex2.pad");
+        int idx = 2;
+        List<ParsedBlock> blocks = ParsedBlock.Parse("Benchmarks/net/" + benchmarks[idx] + ".net");
+        Map<String, ParsedPlacement> fixedPads = ParsedPlacement.Parse("Benchmarks/pads/" + benchmarks[idx] + ".pad");
         Graph graph = new Graph(blocks, fixedPads);
         FPGA fpga = new FPGA(graph, ROWS, COLS, IO_RAT);
         fpga.initPlace();
         // fpga.placeRandom();
         fpga.rippleMove(MAX_ITERATIONS, MAX_RIPPLE_ITERATIONS);
-        FPGA.WriteToFile("./out/output0.place", fpga);
+        FPGA.WriteToFile("./out/" + benchmarks[idx] + ".place", fpga);
         System.out.println("end.");
     }
 
