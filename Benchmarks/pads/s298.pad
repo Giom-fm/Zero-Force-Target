@@ -1,0 +1,15 @@
+Netlist file: ../circ/s298.net   Architecture file: ../arch/vpr422_arch.txt
+Array size: 44 x 44 logic blocks
+
+#block name	x	y	subblk	block number
+#----------	--	--	------	------------
+s298_in_0_	44	0	0	#0
+s298_in_2_	45	8	0	#1
+s298_in_1_	34	45	0	#2
+clock		45	22	0	#3
+out:s298_out_0_	45	34	0	#4
+out:s298_out_1_	0	29	0	#5
+out:s298_out_2_	0	33	0	#6
+out:s298_out_3_	17	0	0	#7
+out:s298_out_4_	45	21	0	#8
+out:s298_out_5_	0	9	0	#9
