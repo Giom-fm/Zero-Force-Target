@@ -22,8 +22,6 @@ import main.net.Pos2D;
 public class FPGATest {
 
     private FPGA fpga;
-    private int ROWS = 3;
-    private int COLS = 3;
     private int IO_RAT = 1;
 
     @Before
@@ -33,7 +31,7 @@ public class FPGATest {
         List<ParsedBlock> parsedBlocks = ParsedBlock.Parse(path + "0.net");
         Map<String, ParsedPlacement> parsedPads = ParsedPlacement.Parse(path + "0.pad");
         Graph graph = new Graph(parsedBlocks, parsedPads);
-        fpga = new FPGA(graph, ROWS, COLS, IO_RAT);
+        fpga = new FPGA(graph, IO_RAT);
     }
 
     @Test
@@ -104,10 +102,10 @@ public class FPGATest {
         assertTrue(this.fpga.validatePos(new Pos2D(1, 1)));
         assertFalse(this.fpga.validatePos(new Pos2D(0, 1)));
         assertFalse(this.fpga.validatePos(new Pos2D(0, 1)));
-        assertTrue(this.fpga.validatePos(new Pos2D(1, this.COLS)));
-        assertTrue(this.fpga.validatePos(new Pos2D(this.ROWS, 1)));
-        assertFalse(this.fpga.validatePos(new Pos2D(this.ROWS + 1, 1)));
-        assertFalse(this.fpga.validatePos(new Pos2D(1, this.COLS + 1)));
+        assertTrue(this.fpga.validatePos(new Pos2D(1, this.fpga.getSIZE())));
+        assertTrue(this.fpga.validatePos(new Pos2D(this.fpga.getSIZE(), 1)));
+        assertFalse(this.fpga.validatePos(new Pos2D(this.fpga.getSIZE() + 1, 1)));
+        assertFalse(this.fpga.validatePos(new Pos2D(1, this.fpga.getSIZE() + 1)));
     }
 
 

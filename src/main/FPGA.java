@@ -21,16 +21,14 @@ public class FPGA {
 
     private final int iorat;
     private Graph graph;
-    private final int ROWS;
-    private final int COLS;
+    private final int SIZE;
     private Block[][] cells;
 
     // REVIEW IO_RAT
-    public FPGA(Graph graph, int rows, int cols, int io_rat) {
-        this.ROWS = rows;
-        this.COLS = cols;
+    public FPGA(Graph graph, int io_rat) {
+        this.SIZE = (int) Math.ceil(Math.sqrt(graph.getBlocks().size()));
         this.iorat = io_rat;
-        this.cells = new Block[this.COLS + 2][this.ROWS + 2];
+        this.cells = new Block[this.SIZE + 2][this.SIZE + 2];
         this.graph = graph;
         Iterator<Pad> it = this.graph.getSortedPads().iterator();
         while (it.hasNext()) {
@@ -65,7 +63,7 @@ public class FPGA {
             Pos2D targetPosition = currentCell.getZFT();
             this.removeCell(currentCell.getPosition());
             while (rippleDone == false) {
-              
+
                 if (!validatePos(targetPosition)) {
                     targetPosition = this.getBestAvailPosNearBy(currentCell, targetPosition, lockedPositions);
                 }
@@ -79,7 +77,7 @@ public class FPGA {
                         targetPosition = this.getBestFreePosNearBy(currentCell, targetPosition, lockedPositions);
                         this.setCell(currentCell, targetPosition);
                         rippleDone = true;
-                    }                  
+                    }
                 } else if (currentCell.getPosition().equals(targetPosition)) {
                     this.setCell(currentCell, targetPosition);
                     lockedPositions.add(targetPosition);
@@ -106,9 +104,9 @@ public class FPGA {
 
     public boolean validatePos(Pos2D pos) {
         return pos.getX() > 0
-                && pos.getX() <= this.ROWS
+                && pos.getX() <= this.SIZE
                 && pos.getY() > 0
-                && pos.getY() <= this.COLS;
+                && pos.getY() <= this.SIZE;
     }
 
     public Pos2D getBestFreePosNearBy(Block currentBlock, Pos2D targetPosition, Set<Pos2D> lockedCells) {
@@ -145,8 +143,8 @@ public class FPGA {
         // REVIEW get only new Blocks
         while (coords.size() == 0) {
             ++depth;
-            for (int x = Math.max(1, i - depth); x <= Math.min(i + depth, this.ROWS); ++x) {
-                for (int y = Math.max(1, j - depth); y <= Math.min(j + depth, this.COLS); ++y) {
+            for (int x = Math.max(1, i - depth); x <= Math.min(i + depth, this.SIZE); ++x) {
+                for (int y = Math.max(1, j - depth); y <= Math.min(j + depth, this.SIZE); ++y) {
                     if (x != i || y != j) {
                         Pos2D pos = new Pos2D(x, y);
                         Block cell = this.getCellByPos(pos);
@@ -173,8 +171,8 @@ public class FPGA {
             logicBlock = it.next();
             found = false;
             while (found == false) {
-                x = rand.nextInt(this.COLS) + 1;
-                y = rand.nextInt(this.ROWS) + 1;
+                x = rand.nextInt(this.SIZE) + 1;
+                y = rand.nextInt(this.SIZE) + 1;
 
                 Pos2D pos = new Pos2D(x, y);
                 if (this.isCellEmpty(pos)) {
@@ -246,11 +244,15 @@ public class FPGA {
         this.setCell(blockA, posTo);
     }
 
+    public int getSIZE() {
+        return SIZE;
+    }
+
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("Netlist file: dummy\tArchitecture file: dummy\n");
-        builder.append("Array size: " + this.ROWS+  " x "+ this.COLS +" logic blocks\n\n");
+        builder.append("Array size: " + this.SIZE + " x " + this.SIZE + " logic blocks\n\n");
         builder.append("#block name	x	y	subblk	block number\n");
         builder.append("#----------	--	--	------	------------\n");
         builder.append(this.graph.toString());
