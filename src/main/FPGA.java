@@ -25,8 +25,8 @@ public class FPGA {
     private Block[][] cells;
 
     // REVIEW IO_RAT
-    public FPGA(Graph graph, int io_rat) {
-        this.SIZE = (int) Math.ceil(Math.sqrt(graph.getBlocks().size()));
+    public FPGA(Graph graph, int io_rat, int size) {
+        this.SIZE = size;
         this.iorat = io_rat;
         this.cells = new Block[this.SIZE + 2][this.SIZE + 2];
         this.graph = graph;

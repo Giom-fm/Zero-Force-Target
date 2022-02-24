@@ -31,7 +31,7 @@ public class GetBestCellTest {
         List<ParsedBlock> parsedBlocks = ParsedBlock.Parse(path + "0.net");
         Map<String, ParsedPlacement> parsedPads = ParsedPlacement.Parse(path + "0.pad");
         Graph graph = new Graph(parsedBlocks, parsedPads);
-        fpga = new FPGA(graph, IO_RAT);
+        fpga = new FPGA(graph, IO_RAT ,3);
     }
 
     @Test

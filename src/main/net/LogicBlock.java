@@ -23,10 +23,12 @@ public class LogicBlock extends Block {
         while (it.hasNext()) {
             Block block = it.next();
             if (!block.getPosition().equals(Block.INIT_POSITION)) {
+                //int weight = block.getBlockType() == BlockType.PAD ? 5 : Block.K;
+                int weight = 1;
                 Pos2D position = block.getPosition();
-                x0_numerator += position.getX();
-                y0_numerator += position.getY();
-                weightSum += 1;
+                x0_numerator += weight * position.getX();
+                y0_numerator += weight * position.getY();
+                weightSum += weight;
             }
 
         }

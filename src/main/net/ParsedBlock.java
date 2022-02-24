@@ -64,7 +64,9 @@ public class ParsedBlock {
                     blockLine = blockLine.trim().split("#")[0];
                     blockName = blockLine.split(" ")[1];
                     pinList = it.next().split(" ");
-                    if (blockLine.startsWith(".input")) {
+                    if (blockLine.startsWith(".global")) {
+                        blockType = BlockType.PAD;
+                    } else if (blockLine.startsWith(".input")) {
                         blockType = BlockType.PAD;
                         out.add(pinList[1]);
                     } else if (blockLine.startsWith(".output")) {
@@ -72,11 +74,14 @@ public class ParsedBlock {
                         in.add(pinList[1]);
                     } else if (blockLine.startsWith(".clb")) {
                         blockType = BlockType.LOGIC_BLOCK;
+                        // Add Inputs
                         for (int i = 1; i < SUBBLOCK_LUT_SIZE; ++i) {
                             in.add(pinList[i].equals("open") ? null : pinList[i]);
                         }
-                        out.add(pinList[SUBBLOCK_LUT_SIZE + 1].equals("open") ? null
-                                : pinList[SUBBLOCK_LUT_SIZE + 1]);
+                        // Add Output
+                        out.add(pinList[SUBBLOCK_LUT_SIZE + 1].equals("open") ? null : pinList[SUBBLOCK_LUT_SIZE + 1]);
+                        // Add clock as input
+                        in.add(pinList[SUBBLOCK_LUT_SIZE + 2].equals("open") ? null : pinList[SUBBLOCK_LUT_SIZE + 2]);
                         // REVIEW Some Logicblocks have more then one Subblock
                         it.next();
                     } else {

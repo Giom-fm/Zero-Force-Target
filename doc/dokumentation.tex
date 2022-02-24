@@ -1,0 +1,116 @@
+\documentclass[
+  12pt,
+  headsepline,
+  headings=normal,
+  toc=bibliography,
+  toc=listof
+]{scrreport}
+
+
+%% Variabeln %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\renewcommand{\author}{Guillaume Fournier-Mayer}
+\renewcommand{\title}{Rechnergestützter Entwurf digitaler Systeme}
+
+%\RedeclareSectionCommand[tocnumwidth=2.3em]{chapter}
+%\RedeclareSectionCommand[tocindent=2.3em,tocnumwidth=3.2em]{section}
+\setcounter{secnumdepth}{\subsubsectionnumdepth}
+\setcounter{tocdepth}{3}
+
+
+%% Documentclass Anpassungen
+\usepackage{scrhack}
+
+
+%% Deutsche Anpassungen %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern} %Type1-Schriftart für nicht-englische Texte
+\usepackage{textcomp}
+
+
+%% Packages für Grafiken & Abbildungen %%%%%%%%%%%%%%%%%%%%%%
+\usepackage{graphicx}
+%\usepackage{eso-pic}
+\usepackage{float}
+
+
+%% Hyperref %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[final, backref=false, pagebackref=false, bookmarks=true]{hyperref}
+
+\hypersetup{ %Ä=\304; Ö=\326; Ü=\334; ä=\344; ö=\366; ü=\374; ß=\377
+  pdfauthor={Guillaume Fournier-Mayer},
+  pdftitle={EDA-Praktikum},
+  pdfsubject={\title},
+  pdfproducer={MiKTeX},
+  pdfview=FitV,             % Fit, FitH, FitV
+  pdfstartview=FitV,        % PDF-Viewer benutzt beim Start bestimmte Seitenbreite
+                            % (Fit, FitH, FitV)
+  pdfpagemode=UseOutlines,  % PDF-Viewer startet ohne Inhaltsverzeichnis et.al.
+                            % (FullScreen, UseOutlines, None)
+  linkcolor=black,          % Für Links in der gleichen Seite
+  urlcolor=blue,            % Für Links auf URL’s
+  breaklinks=false,         % Links dürfen umgebrochen werden
+  colorlinks=true,
+  citecolor=black,          % Farbe für \cite
+  citebordercolor=0 0 0,
+  filebordercolor=0 0 0,
+  linkbordercolor=0 0 0,
+  menubordercolor=0 0 0,
+  urlbordercolor=0 0 0,
+  pdfhighlight=/I,
+  pdfborder=0 0 0,          % keine Box um die Links!
+  bookmarksnumbered=false,
+  hypertexnames=false,
+  bookmarksopen=true
+}
+
+%% Geometry %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\geometry{includeheadfoot, headheight = 17mm, textwidth = 16cm, textheight = 23cm}
+\usepackage[left=35mm, right=30mm, top=30mm, bottom=30mm, a4paper]{geometry}
+
+%% TABLE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{longtable}
+\usepackage{multirow}
+%% Header %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[automark]{scrlayer-scrpage}
+\pagestyle{scrheadings}
+%\clearpairofpagestyles
+\chead{}
+\ihead{\headmark}
+\automark{chapter}
+
+
+%% Zitate %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[backend=biber,style=numeric,]{biblatex}
+\addbibresource{literatur.bib}
+\usepackage{dirtytalk}
+
+%% Formeln %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{amsmath}
+\usepackage{nicefrac}
+
+%% Titel %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Dokument %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\input{tex/Titel.tex}
+%\renewcommand{\thechapter}{\Roman{chapter}}
+%\pagenumbering{Roman}
+\tableofcontents
+\newpage
+%\renewcommand{\thechapter}{\arabic{chapter}}
+%\setcounter{chapter}{0}
+%\pagenumbering{arabic}
+\input{tex/Einleitung.tex}
+\chapter{Umsetzung}
+\chapter{Auswertung}
+
+%\pagenumbering{Roman}
+%\renewcommand{\thechapter}{\Roman{chapter}}
+\newpage
+\listoffigures
+\listoftables
+\printbibliography
+\end{document}
