@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 public class ParsedBlock {
 
     static private final int SUBBLOCK_LUT_SIZE = 4;
-    static private final int SUBBLOCKS_PER_CLB = 1;
+
 
     private final String name;
     private final List<String> in;

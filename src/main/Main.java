@@ -12,7 +12,6 @@ public class Main {
 
     private static final int MAX_RIPPLE_ITERATIONS = 20;
     private static final int MAX_ITERATIONS = 1000;
-    private static final int IO_RAT = 2;
 
     public static void main(String[] args) throws IOException {
 
@@ -35,18 +34,17 @@ public class Main {
             System.out.println("Create Graph...");
             Graph graph = new Graph(blocks, fixedPads);
 
-            FPGA fpga = new FPGA(graph, IO_RAT, size[idx]);
+            FPGA fpga = new FPGA(graph, size[idx]);
             System.out.println("Init placing...");
             fpga.initPlace();
-            // fpga.placeRandom();
+            //fpga.placeRandom();
             System.out.println("Ripple move...");
-            fpga.rippleMove(MAX_ITERATIONS, MAX_RIPPLE_ITERATIONS);
+            //fpga.rippleMove(MAX_ITERATIONS, MAX_RIPPLE_ITERATIONS);
             long end = System.currentTimeMillis();
-            FPGA.WriteToFile("./out/place/" + benchMarkName + ".place", fpga);
+            FPGA.WriteToFile("./out/place/test/" + benchMarkName + ".place", fpga);
             long elapsedTime = end - start;
             System.out.println("Done! Elapsed time: " + elapsedTime + " ms\n");
         }
     }
 
 }
-// 7491.522

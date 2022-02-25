@@ -19,7 +19,6 @@ import main.net.Pos2D;
 public class GetNearByPositionsTest {
 
     private FPGA fpga;
-    private int IO_RAT = 1;
 
     @Before
     public void init() {
@@ -28,7 +27,7 @@ public class GetNearByPositionsTest {
         List<ParsedBlock> parsedBlocks = ParsedBlock.Parse(path + "0.net");
         Map<String, ParsedPlacement> parsedPads = ParsedPlacement.Parse(path + "0.pad");
         Graph graph = new Graph(parsedBlocks, parsedPads);
-        fpga = new FPGA(graph, IO_RAT, 3);
+        fpga = new FPGA(graph, 3);
     }
 
     @Test

@@ -11,13 +11,13 @@ import java.util.stream.Stream;
 public class ParsedPlacement {
 
     private final String name;
-    private final int x, y, subblock;
+    private final int x, y, subBlock;
 
     private ParsedPlacement(String name, int x, int y, int subblock) {
         this.name = name;
         this.x = x;
         this.y = y;
-        this.subblock = subblock;
+        this.subBlock = subblock;
     }
 
     public static Map<String, ParsedPlacement> Parse(String file) {
@@ -64,8 +64,8 @@ public class ParsedPlacement {
         return y;
     }
 
-    public int getSubblock() {
-        return subblock;
+    public int getSubBlock() {
+        return subBlock;
     }
 
 }

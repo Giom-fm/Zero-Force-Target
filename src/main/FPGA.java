@@ -19,15 +19,12 @@ import main.net.Pos2D;
 
 public class FPGA {
 
-    private final int iorat;
     private Graph graph;
     private final int SIZE;
     private Block[][] cells;
 
-    // REVIEW IO_RAT
-    public FPGA(Graph graph, int io_rat, int size) {
+    public FPGA(Graph graph, int size) {
         this.SIZE = size;
-        this.iorat = io_rat;
         this.cells = new Block[this.SIZE + 2][this.SIZE + 2];
         this.graph = graph;
         Iterator<Pad> it = this.graph.getSortedPads().iterator();
@@ -51,7 +48,6 @@ public class FPGA {
         Set<Pos2D> lockedPositions = new HashSet<>();
         int rippleIterations = 0;
 
-        // REVIEW Add pad positions to global locked cells
         // REVIEW Parsing from block is wrong. Not all inputs are shown
         it = logicBlocks.iterator();
         while (maxIterations > 0) {
@@ -69,7 +65,6 @@ public class FPGA {
                 }
                 Block targetCell = this.getCellByPos(targetPosition);
                 if (lockedPositions.contains(targetPosition)) {
-                    targetPosition = this.getBestAvailPosNearBy(currentCell, targetPosition, lockedPositions);
                     rippleIterations++;
                     if (rippleIterations >= maxRippleIterations) {
                         lockedPositions.clear();
@@ -77,6 +72,8 @@ public class FPGA {
                         targetPosition = this.getBestFreePosNearBy(currentCell, targetPosition, lockedPositions);
                         this.setCell(currentCell, targetPosition);
                         rippleDone = true;
+                    } else {
+                        targetPosition = this.getBestAvailPosNearBy(currentCell, targetPosition, lockedPositions);
                     }
                 } else if (currentCell.getPosition().equals(targetPosition)) {
                     this.setCell(currentCell, targetPosition);
@@ -89,6 +86,9 @@ public class FPGA {
                     rippleDone = true;
                     rippleIterations = 0;
                 } else if (targetCell.getBlockType() == BlockType.LOGIC_BLOCK) {
+
+                    
+
                     this.setCell(currentCell, targetPosition);
                     lockedPositions.add(targetPosition);
                     currentCell = (LogicBlock) targetCell;
@@ -140,7 +140,6 @@ public class FPGA {
         int i = coord.getX(), j = coord.getY();
         int depth = 0;
         List<Pos2D> coords = new LinkedList<>();
-        // REVIEW get only new Blocks
         while (coords.size() == 0) {
             ++depth;
             for (int x = Math.max(1, i - depth); x <= Math.min(i + depth, this.SIZE); ++x) {
@@ -223,7 +222,6 @@ public class FPGA {
     }
 
     public void removeCell(Pos2D pos) {
-        // REVIEW Remove position?
         this.cells[pos.getX()][pos.getY()] = null;
     }
 

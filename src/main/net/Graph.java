@@ -1,8 +1,5 @@
 package main.net;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -13,8 +10,6 @@ import java.util.stream.Collectors;
 public class Graph {
 
     private Map<String, Block> blocks;
-
-   
 
     public Graph(List<ParsedBlock> parsedBlocks, Map<String, ParsedPlacement> parsedPads) {
         this.createBlocks(parsedBlocks, parsedPads);
@@ -38,7 +33,7 @@ public class Graph {
 
             if (blockType == BlockType.PAD) {
                 ParsedPlacement parsedPad = parsedPads.get(blockName);
-                newBlock = new Pad(blockName, new Pos2D(parsedPad.getX(), parsedPad.getY()), parsedPad.getSubblock());
+                newBlock = new Pad(blockName, new Pos2D(parsedPad.getX(), parsedPad.getY()), parsedPad.getSubBlock());
             } else if (blockType == BlockType.LOGIC_BLOCK) {
                 newBlock = new LogicBlock(blockName);
             } else {
@@ -74,10 +69,6 @@ public class Graph {
         }
     }
 
-    public Map<String, Block> getBlocks() {
-        return blocks;
-    }
-
     public List<LogicBlock> getSortedLogicBlocks() {
         return this.blocks.values().stream().filter((block) -> {
             return block.getBlockType() == BlockType.LOGIC_BLOCK;
@@ -90,7 +81,7 @@ public class Graph {
         }).collect(Collectors.toCollection(LinkedList::new));
     }
 
-    public List<LogicBlock> getSortedByPadLogicBlocks() {
+    public List<LogicBlock> getSortedPadsByLogicBlocks() {
         return this.blocks.values().stream().filter((block) -> {
             return block.getBlockType() == BlockType.LOGIC_BLOCK;
         }).filter((block) -> {

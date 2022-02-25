@@ -5,9 +5,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 public abstract class Block {
-    protected final String name;
+
     protected static final int K = 1;
     public static final Pos2D INIT_POSITION = new Pos2D(-1, -1);
+
+    protected final String name;
     protected Pos2D position = new Pos2D(Block.INIT_POSITION);
     private List<Block> connectedBlocks = new LinkedList<>();
 
@@ -31,8 +33,7 @@ public abstract class Block {
         return force;
     }
 
-    // REVIEW K?
-    private static double calculateForce(Pos2D posA, Pos2D posB) {
+    public static double calculateForce(Pos2D posA, Pos2D posB) {
         return K * (Math.sqrt(Math.pow(posA.getX() - posB.getX(), 2) + Math.pow(posA.getY() - posB.getY(), 2)));
     }
 
@@ -50,10 +51,6 @@ public abstract class Block {
 
     public List<Block> getConnectedBlocks() {
         return connectedBlocks;
-    }
-
-    public void setConnectedBlocks(List<Block> connectedBlocks) {
-        this.connectedBlocks = connectedBlocks;
     }
 
     public void addConnectedBlock(Block block) {
