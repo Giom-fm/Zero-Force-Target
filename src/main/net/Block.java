@@ -33,7 +33,8 @@ public abstract class Block {
         return force;
     }
 
-    public static double calculateForce(Pos2D posA, Pos2D posB) {
+    // REVIEW K?
+    private static double calculateForce(Pos2D posA, Pos2D posB) {
         return K * (Math.sqrt(Math.pow(posA.getX() - posB.getX(), 2) + Math.pow(posA.getY() - posB.getY(), 2)));
     }
 

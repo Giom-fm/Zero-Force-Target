@@ -6,7 +6,7 @@
         das heißt Ein- und Ausgabeformate von VPR.
         Der grobe Ablauf des gesamten Entwurfes besteht darin, die Netzliste einzulesen und
         mithilfe der FPGA-Architektur eine passende Platzierung zu ermitteln.
-        In der Netzliste, die als *.net Datei abgelegt wird befinden sich alle Informationen über
+        In der Netzliste, die als *.net Datei abgelegt wird, befinden sich alle Informationen über
         Logikblöcke sowie Eingangs- und Ausgangspins des FPGA und wie diese miteinander verbunden sind.
         Die FPGA-Architektur die als *.arch Datei gespeichert wird beinhaltet Daten über die Beschaffenheit des FPGAs.
         Dazu gehören zum Beispiel Kanalbreite oder der genaue Aufbau der Logikblöcke.
@@ -14,7 +14,7 @@
         War die Platzierung erfolgreich, wird eine Platzierungsdatei *.place mit den Positionen der einzelnen Logikblöcke erstellt.
         Als nächster Schritt ließt VPR die Platzierungsinformationen ein und verdrahtet die Blöcke mithilfe der Netzliste und der FPGA-Architektur.
         Die daraus entstehende *.route Datei beinhaltet wiederum die Informationen wie die Blöcke miteinander verbunden sind.
-        Je besser dabei die Platzierung, desto einfacher ist der Verdrahtungsschritt.
+        Je besser die Platzierung, desto einfacher ist der Verdrahtungsschritt.
         Des Weiteren können schon beim Platzieren verschiedene Optimierungen vorgenommen werden um zum Beispiel den kritischen Pfad zu minimieren.
 
     \section{Kräfteplatzierung}
@@ -58,14 +58,6 @@
                 y_i^0 = \frac{\sum_{j} w_{ij} \cdot y_j}{\sum_{j} w_{ij}}
             \end{equation}
 
-        \subsection{Initialplazierung}
-            Dadurch, dass die Kräfteplatzierung ein iterativer Algorithmus ist,
-            müssen die Blöcke gesetzt sein, um die jeweilige ZFT-Position zu berechnen.
-            Ein möglicher Ansatz ist es, die Blöcke zufällig zu platzieren.
-            Der Vorteil dieser Lösung ist, dass dieses Verfahren einfach umgesetzt werden kann.
-            Der eindeutige Nachteil liegt in einer potenziellen schlechten Initialplatzierung,
-            welches die Laufzeit und Effektivität der Kräfteplatzierung beeinflussen kann.
-
         \subsection{Grober Ablauf}
             Der grobe Ablauf der Kräfteplatzierung besteht zunächst darin, eine Initialplatzierung zu finden.
             War dies erfolgreich, werden iterativ die ZFT-Position aller Blöcke berechnet.
@@ -90,7 +82,7 @@
                 \item Berechnen der Kostenveränderung beim Austausch von zwei Blöcken. Bei verringerten Kosten werden die Blöcke getauscht
                 \item \textbf{Chain Move}: Der zu verschiebende Block wird an die Zielposition verschoben,
                     ohne die Kostendifferenz zu berechnen. Der verdränge Block wird auf die nächstgelegende Position verschoben.
-                    Ist diese auch belegt, kommt es zu einer Kettenverschieben (Chain Move)
+                    Ist diese auch belegt, kommt es zu einer Kettenverschiebung (Chain Move)
                 \item \textbf{Ripple Move}: Der zu verschiebende Block wird an die Zielposition verschoben und fixiert.
                     Die ZFT-Position des verdrängten Blockes wird berechnet und nach demselben Prinzip verschoben.
                     Dies geschieht so lange, bis alle Blöcke fixiert bzw. platziert sind.

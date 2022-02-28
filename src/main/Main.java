@@ -22,7 +22,7 @@ public class Main {
 
         // some time passes
 
-        for (int idx = 0; idx < benchmarks.length; ++idx) {
+        for (int idx = 0; idx < 3; ++idx) {
             String benchMarkName = benchmarks[idx];
             System.out.println("Starting Benchmark: " + benchMarkName);
             System.out.println("Parsing...");
@@ -39,7 +39,7 @@ public class Main {
             fpga.initPlace();
             //fpga.placeRandom();
             System.out.println("Ripple move...");
-            //fpga.rippleMove(MAX_ITERATIONS, MAX_RIPPLE_ITERATIONS);
+            fpga.rippleMove(MAX_ITERATIONS, MAX_RIPPLE_ITERATIONS);
             long end = System.currentTimeMillis();
             FPGA.WriteToFile("./out/place/test/" + benchMarkName + ".place", fpga);
             long elapsedTime = end - start;

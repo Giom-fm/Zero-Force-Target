@@ -33,20 +33,4 @@ public class GetBestCellTest {
         fpga = new FPGA(graph ,3);
     }
 
-    @Test
-    public void GetBestPosNearBy() {
-
-        Block pad_01 = this.fpga.getCellByName("i_01");
-        Block pad_10 = this.fpga.getCellByName("i_10");
-        Block currentBlock = new LogicBlock("blockA");
-        currentBlock.addConnectedBlock(pad_01);
-        currentBlock.addConnectedBlock(pad_10);
-        Pos2D targetPosition = new Pos2D(2, 2);
-        Set<Pos2D> lockedCells = new HashSet<>();
-
-        Pos2D bestPos = this.fpga.getBestPosNearBy(currentBlock, targetPosition, lockedCells, true);
-        Pos2D expected = new Pos2D(1, 1);
-
-        assertEquals(expected, bestPos);
-    }
 }

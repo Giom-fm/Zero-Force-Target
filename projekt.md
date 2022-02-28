@@ -1,3 +1,4 @@
+## Programm
 * KräftePlatzierung
     * Iterativ
     * Kostenfunktion über "Federn"
@@ -16,7 +17,12 @@
         6. ~~Ermitteln der ZFT Position eines Blocks~~
         7. ~~Abbruchbedingung~~
 
-    * Subblöcke für PADs
-    * Clock
+    * ~~Subblöcke für PADs~~
+    * ~~Clock~~
+
+
+## DOC
+    * Algo will eig alle Zellen auf eine Position setzen
+    * Tauschen von Zellen die eigentlich auf einer besseren Position sitzen
 
 

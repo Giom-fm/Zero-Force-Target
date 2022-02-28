@@ -43,25 +43,6 @@ public class FPGATest {
     }
 
     @Test
-    public void SwapCells() {
-        Pos2D posA = new Pos2D(1, 1);
-        Pos2D posB = new Pos2D(2, 2);
-
-        LogicBlock blockA = new LogicBlock("a", posA);
-        LogicBlock blockB = new LogicBlock("a", posB);
-
-        this.fpga.setCell(blockA, posA);
-        this.fpga.setCell(blockB, posB);
-
-        this.fpga.swapCells(blockA, blockB);
-        Block getBlockA = this.fpga.getCellByPos(posB);
-        Block getBlockB = this.fpga.getCellByPos(posA);
-
-        assertEquals(blockA, getBlockA);
-        assertEquals(blockB, getBlockB);
-    }
-
-    @Test
     public void MoveCell() {
         Pos2D posA = new Pos2D(1, 1);
         Pos2D posB = new Pos2D(2, 2);

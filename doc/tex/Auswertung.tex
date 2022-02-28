@@ -1,0 +1,160 @@
+\chapter{Auswertung}
+
+    Im folgenden Kapitel werden die Ergebnisse ausgewertet und in Relation zu den Benchmarks von VPR gesetzt.
+    Zunächst werden in Kapitel (\ref{sec:result-init}) die zwei verschiedenen Initialplatzierungen miteinander
+    verglichen. Des Weiteren werden in Kapitel (\ref{sec:result-costs}) die Kosten der Platzierung
+    der jeweiligen Benchmarks mit den Platzierungskosten von VPR verglichen.
+    Abschließend werden in Kapitel (\ref{sec:result-routing}) die Ergebnisse der vorgenommenen
+    Verdrahtung durch VPR verglichen.
+    Alle Benchmarks wurden dabei mit einer \textit{maxIterations} von 1000
+    und einer \textit{maxRippleIterations} von 20 ausgeführt
+
+    \section{Initialplatzierung}\label{sec:result-init}
+
+        Die Ergebnisse der Platzierung sind unter anderem abhängig von der Initialplatzierung.
+        Daher wird die in dieser Arbeit entwickelte Initialplatzierung in diesem Kapitel mit einer
+        zufälligen Initialplatzierung verglichen.
+        Als Vergleichsgrößen werden die Laufzeit des Gesamtalgorithmus sowie die
+        Platzierungskosten verwendet. Dabei gilt für beide Größen,
+        dass ein niedrigerer Wert ein besseres Endergebnis darstellt. Tabelle (\ref{tab:init})
+        stellt die oben genannten Zusammenhänge tabellarisch dar. Die Differenzspalte ist so zu verstehen,
+        dass ein negativer Wert ein besseres Ergebnis darstellt.
+        Für die Platzierungen ist die Laufzeit jedoch nicht ausschlaggebend.
+        Eine höhere Laufzeit kann in manchen Fällen in Kauf genommen werden, um damit die
+        Platzierungskosten niedriger zu halten.
+        \\
+        Auffällig ist, dass nicht jeder Benchmark von der
+        ZFT-Initialplatzierung profitiert. Wie in Kapitel (\ref{sec:init}) erwähnt, ist dies damit zu erklären,
+        dass die berechnete ZFT-Position für manche Blöcke nicht exakt berechnet werden kann und somit
+        die Initialplatzierung nicht ideal ist. Des Weiteren ist denkbar,
+        dass die Zufallsplatzierung durch Zufall eine idealere Initialplatzierung für das iterative
+        Verfahren der Kräfteplatzierung findet.
+        \\
+        In diesem Fall kann durch die ZFT-Initialplatzierung in 11 von 20 Fällen eine bessere
+        Platzierung erzielt werden. Zu erwähnen ist auch, dass sich in 8 von 11 Fällen zusätzlich die
+        Laufzeit erhöht.
+
+        \begin{center}
+            \begin{longtable}{| l | r | r | r | r | r | r |}
+                \hline
+                \multirow{2}*{\textbf{Benchmark}}  & \multicolumn{2}{|c|}{\textbf{ZFT-Platzierung}} & \multicolumn{2}{|c|}{\textbf{Zufallsplatzierung}} & \multicolumn{2}{|c|}{\textbf{Differenz (\%)}}\\ \cline{2-7}
+                                &   Zeit (ms) & Kosten      &   Zeit (ms)   &    Kosten     &   Zeit    &   Kosten  \\ \hline
+                    alu4        &   22347   &   390,582     &   22389       &    391.755    & -0.19     & -0.30   \\ \hline
+                    apex2       &   35065   &   538,017     &   31763       &    531.647    & 10.40     & 1.20   \\ \hline    
+                    apex4       &   13855   &   310,617     &   13833       &    299.461    & 0.16      & 3.73   \\ \hline        
+                    bigkey      &   16534   &   505,461     &   15362       &    515.345    & 7.63      & -1.92   \\ \hline        
+                    clma        &   408551  &   3555,85     &   507620      &    3493.84    & -19.52    & 1.77   \\ \hline        
+                    des         &   2272    &   368,297     &   1858        &    368.784    & 22.28     & -0.13   \\ \hline        
+                    diffeq      &   26617   &   385,295     &   25555       &    385.582    & 4.16      & -0.07   \\ \hline        
+                    dsip        &   22176   &   456,205     &   20358       &    460.81     & 8.93      & -1.00   \\ \hline        
+                    elliptic    &   346639  &   1256,4      &   319950      &    1314.94    & 8.34      & -4.45   \\ \hline         
+                    ex5p        &   18487   &   268,953     &   16410       &    276.82     & 12.66     & -2.84   \\ \hline        
+                    ex1010      &   123064  &   1266,36     &   108375      &    1239.9     & 13.55     & 2.13   \\ \hline        
+                    frisc       &   138902  &   1245,97     &   142276      &    1359.29    & -2.37     & -8.34   \\ \hline        
+                    misex3      &   14292   &   340,409     &   10634       &    337.241    & 34.40     & 0.94   \\ \hline        
+                    pdc         &   213463  &   1731,39     &   158013      &    1725.91    & 35.09     & 0.32   \\ \hline        
+                    s298        &   50932   &   538,604     &   48419       &    538.008    & 5.19      & 0.11   \\ \hline        
+                    s38417      &   210034  &   1977,98     &   187441      &    1893.73    & 12.05     & 4.45   \\ \hline        
+                    s38584.1    &   1179389 &   2621,59     &   884384      &    2701.24    & 33.36     & -2.95   \\ \hline        
+                    seq         &   33346   &   465,327     &   35338       &    464.718    & -5.64     & 0.13   \\ \hline        
+                    spla        &   101775  &   1188,14     &   98363       &    1218.62    & 3.47      & -2.50   \\ \hline        
+                    tseng       &   8084    &   213,566     &   8445        &    230.618    & -4.27     & -7.39   \\ \hline        
+                \caption{Kostenfunktionen und Laufzeit unterschiedlicher Initialplatzierung}
+                \label{tab:init}
+            \end{longtable}
+        \end{center}
+
+
+
+    \section{Platzierungskosten}\label{sec:result-costs}
+
+        In diesem Kapitel werden die Ergebnisse der Platzierungen,
+        die durch VPR und durch den entwickelten Algorithmus berechnet wurden, miteinander verglichen.
+        Je niedriger die Kosten, desto besser ist das Endergebnis. Die Tabelle (\ref{tab:costs})
+        stellt die Ergebnissee der 20 Benchmarks dar. Eine negative Differenz bedeutet,
+        dass die VPR Platzierung um den jeweiligen prozentualen Wert weniger Platzierungskosten verursacht.
+        Die Ergebnisse der Kräfteplatzierung sind bis zu $\approx 75 \%$
+        schlechter als die der VPR-Platzierung.\\
+        Dabei ist zu erwähnen, dass VPR einen Algorithmus verwendet
+        der auf Simulated annealing zurückzuführen ist.
+        Dieser ist ein weit verbreiteter Algorithmus und liefert sehr gute Ergebnisse.
+        Dies bedeutet im Umkehrschluss, dass die Ergebnisse schwer miteinander zu vergleichen sind. 
+
+        \begin{center}
+            \begin{longtable}{| l | r | r | r |}
+                \hline
+                \textbf{Benchmark}  & \textbf{ZFT-Kosten} & \textbf{VPR-Kosten} & \textbf{Differenz (\%)} \\
+                \hline
+                    alu4        &   390,582     &   190,135     &   -51,32 \\ \hline
+                    apex2       &   538,017     &   269,765     &   -49,86 \\ \hline    
+                    apex4       &   310,617     &   179,329     &   -42,27 \\ \hline        
+                    bigkey      &   505,461     &   185,977     &   -63,21 \\ \hline        
+                    clma        &   3555,85     &   1387,05     &   -60,99 \\ \hline        
+                    des         &   368,297     &   227,843     &   -38,14 \\ \hline        
+                    diffeq      &   385,295     &   146,394     &   -62,00 \\ \hline        
+                    dsip        &   456,205     &   169,991     &   -62,74 \\ \hline        
+                    elliptic    &   1256,4      &   457,203     &   -63,61 \\ \hline         
+                    ex5p        &   268,953     &   162,012     &   -39,76 \\ \hline        
+                    ex1010      &   1266,36     &   655,429     &   -48,24 \\ \hline        
+                    frisc       &   1245,97     &   515,59      &   -58,62 \\ \hline        
+                    misex3      &   340,409     &   190,205     &   -44,12 \\ \hline        
+                    pdc         &   1731,39     &   898,44      &   -48,11 \\ \hline        
+                    s298        &   538,604     &   203,949     &   -62,13 \\ \hline        
+                    s38417      &   1977,98     &   671,75      &   -66,04 \\ \hline        
+                    s38584.1    &   2621,59     &   657,87      &   -74,91 \\ \hline        
+                    seq         &   465,327     &   247,658     &   -46,78 \\ \hline        
+                    spla        &   1188,14     &   593,969     &   -50,01 \\ \hline        
+                    tseng       &   213,566     &   92,0471     &   -56,90 \\ \hline        
+                \caption{Kosten der Platzierungen im Vergleich zu VPR}
+                \label{tab:costs}
+            \end{longtable}
+        \end{center}
+
+    \section{Kritischer Pfad und Kanalbreite}\label{sec:result-routing}
+
+        Im folgenden Kapitel werden die Ergebnisse der Verdrahtungen, die durch VPR durchgeführt wurden,
+        miteinander verglichen. Dabei hat VPR jeweils die vorgegebenen Platzierungsbenchmarks sowie die
+        berechneten Platzierungen durch die entworfene Software verdrahtet.
+        Die wichtigsten Kenngrößen nach dem Verdrahtungsschritt sind die Kanalbreite
+        sowie die Dauer des kritischen Pfades. Beide Werte sind je besser,
+        desto niedriger sie sind und werden in Tabelle (\ref{tab:routing}) dargestellt.
+        Die negativen Werte in der Differenzspalte besagen, dass das VPR-Routing eine
+        niedrigere Kanalbreite bzw. einen niedrigeren kritischen Pfad verursacht.
+        Dass hierbei das VPR-Routing besser ist, liegt daran, dass wie schon in Kapitel (\ref{sec:result-costs})
+        erläutert die Platzierungskosten geringer sind. 
+        Dementsprechend kann einfacher und mit niedrigerer Kanalbreite
+        geroutet werden. Die Differenz der Kanalbreite hat jedoch keinen direkten Zusammenhang mit der
+        Differenz des kritischen Pfades, wie das Beispiel des Benchmarks \textit{bigkey} oder \textit{des} zeigt.
+        Obwohl in beiden Fällen die Kanalbreite im ZFT-Routing weit aus höher ist als im VPR-Routing, ist
+        die Dauer des kritischen Pfades nur $\approx 8\%$ bzw $\approx 6\%$ niedriger.
+
+
+        \begin{center}
+            \begin{longtable}{| l | r | r | r | r | r | r |}
+                \hline
+                \multirow{2}*{\textbf{Benchmark}}  & \multicolumn{2}{|c|}{\textbf{ZFT-Routing}} & \multicolumn{2}{|c|}{\textbf{VPR-Routing}} & \multicolumn{2}{|c|}{\textbf{Differenz (\%)}}\\ \cline{2-7}
+                                &   Kanalbreite &   K. Pfad     &   Kanalbreite &   K. Pfad  &   Kanalbreite &   K. Pfad\\ \hline
+                    alu4        &   22  &   1.54E-07    &   11  &   1.12E-07    &   -50.00  &   -27.50   \\ \hline
+                    apex2       &   24  &   2.01E-07    &   12  &   1.41E-07    &   -50.00  &   -29.87   \\ \hline    
+                    apex4       &   21  &   1.47E-07    &   13  &   1.31E-07    &   -38.10  &   -10.62   \\ \hline        
+                    bigkey      &   23  &   1.14E-07    &   6   &   1.06E-07    &   -73.91  &   -7.40    \\ \hline        
+                    clma        &   36  &   4.11E-07    &   13  &   2.54E-07    &   -63.89  &   -38.30   \\ \hline        
+                    des         &   12  &   1.29E-07    &   8   &   1.21E-07    &   -33.33  &   -5.66    \\ \hline        
+                    diffeq      &   21  &   1.84E-07    &   8   &   8.82E-08    &   -61.90  &   -52.11   \\ \hline        
+                    dsip        &   23  &   9.21E-08    &   6   &   7.98E-08    &   -73.91  &   -13.44   \\ \hline        
+                    elliptic    &   32  &   2.55E-07    &   11  &   1.83E-07    &   -65.63  &   -28.45   \\ \hline         
+                    ex5p        &   22  &   1.29E-07    &   14  &   1.09E-07    &   -36.36  &   -15.16   \\ \hline        
+                    ex1010      &   22  &   2.87E-07    &   11  &   2.48E-07    &   -50.00  &   -13.61   \\ \hline        
+                    frisc       &   27  &   3.01E-07    &   13  &   1.69E-07    &   -51.85  &   -43.85   \\ \hline        
+                    misex3      &   20  &   1.34E-07    &   12  &   1.06E-07    &   -40.00  &   -20.86   \\ \hline        
+                    pdc         &   34  &   3.17E-07    &   18  &   2.39E-07    &   -47.06  &   -24.52   \\ \hline        
+                    s298        &   22  &   2.97E-07    &   8   &   1.98E-07    &   -63.64  &   -33.33   \\ \hline        
+                    s38417      &   26  &   2.81E-07    &   8   &   1.77E-07    &   -69.23  &   -36.83   \\ \hline        
+                    s38584.1    &   38  &   2.10E-07    &   9   &   1.27E-07    &   -76.32  &   -39.50   \\ \hline        
+                    seq         &   23  &   1.39E-07    &   12  &   1.27E-07    &   -47.83  &   -9.00    \\ \hline        
+                    spla        &   28  &   2.64E-07    &   14  &   1.76E-07    &   -50.00  &   -33.29   \\ \hline        
+                    tseng       &   17  &   1.09E-07    &   7   &   9.00E-08    &   -58.82  &   -17.57   \\ \hline        
+                \caption{Kritischer Pfad und Kanalbreite im Vergleich zu VPR}
+                \label{tab:routing}
+            \end{longtable}
+        \end{center}

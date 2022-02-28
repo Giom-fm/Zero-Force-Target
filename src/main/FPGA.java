@@ -86,13 +86,10 @@ public class FPGA {
                     rippleDone = true;
                     rippleIterations = 0;
                 } else if (targetCell.getBlockType() == BlockType.LOGIC_BLOCK) {
-
-                    
-
                     this.setCell(currentCell, targetPosition);
-                    lockedPositions.add(targetPosition);
                     currentCell = (LogicBlock) targetCell;
                     currentCell.setPosition(Block.INIT_POSITION);
+                    lockedPositions.add(targetPosition);
                     targetPosition = currentCell.getZFT();
                     rippleIterations = 0;
                 }
@@ -212,10 +209,6 @@ public class FPGA {
         return this.cells[pos.getX()][pos.getY()];
     }
 
-    public Block getCellByName(String name) {
-        return this.graph.getBlock(name);
-    }
-
     public void setCell(Block block, Pos2D pos) {
         block.setPosition(pos);
         this.cells[pos.getX()][pos.getY()] = block;
@@ -227,13 +220,6 @@ public class FPGA {
 
     public boolean isCellEmpty(Pos2D pos) {
         return this.cells[pos.getX()][pos.getY()] == null;
-    }
-
-    public void swapCells(Block blockA, Block blockB) {
-        Pos2D posA = blockA.getPosition();
-        Pos2D posB = blockB.getPosition();
-        this.setCell(blockA, posB);
-        this.setCell(blockB, posA);
     }
 
     public void moveCell(Pos2D posFrom, Pos2D posTo) {
