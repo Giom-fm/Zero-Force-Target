@@ -128,3 +128,21 @@
             \caption{Ripplemove Ablaufplan}
             \label{fig:algo-flowchart}
         \end{figure}
+        Ein Nachteil von Algorithmen, die nach diesem Modell arbeiten, ist,
+        dass sie dazu tendieren, alle Blöcke auf dieselbe Position zu setzen.
+        Wenn eine Position jedoch schon belegt ist, muss eine andere und in diesem
+        Fall auch schlechtere Position gesucht werden, sodass ein suboptimales
+        Endergebnis zu erwarten ist. Des Weiteren ist zu erwähnen, dass in dieser
+        Implementation die Gewichtungen der Verbindungen alle gleich sind.
+        Das heißt, es gibt keine Blöcke bzw. Verbindungen, die priorisiert werden.
+        Weiterhin werden in der aktuellen Implementation Blöcke an Zielpositionen
+        verschoben, ohne dass die Kostendifferenz der Vertauschung berücksichtigt werden.
+        Auch dies führt zu einem potenziell schlechteren Ergebnis.
+        Darüber hinaus ist nicht zwangsläufig gegeben, dass ein Block an seiner
+        ZFT-Position eine minimale Verdahtungslänge aufweisen.
+        Das bedeutet, dass selbst wenn der Algorithmus jeden Block auf seine
+        ZFT-Position platzieren kann, das Ergebnis nicht optimal sein muss.
+        All diese Punkte müssen im Folgekapitel, insbesondere im Vergleich mit den
+        Ergebnissen von VPR berücksichtigt werden.
+
+

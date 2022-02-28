@@ -1,9 +1,14 @@
 \chapter{Einleitung}
 
     \section{Problemstellung}
-        Ziel des Praktikums ist das Entwerfen einer Software, die eine Logikschaltung auf eine gegebene FPGA-Architektur platziert.
-        Die zu entwerfende Software wird dabei durch eine weitere Software Namens \textit{Versatile Place and Route (VPR)} unterstützt und hält sich dabei an die vergebenen Schnittstellen,
-        das heißt Ein- und Ausgabeformate von VPR.
+        Ziel des Praktikums ist es, eine Software zu entwerfen, die einen der Teilschritt Clustering,
+        Platzierung oder Verdrahtung im Entwurf digitaler Systeme übernimmt.
+        In dieser Arbeit wurde als Teilschritt die Platzierung ausgewählt,
+        sodass die übrigen Teilschritte Clustering und Verdrahtung von einer zusätzlichen Software Namens
+        \textit{Versatile Place and Route (VPR)} übernommen werden.
+        Dabei ist zu erwähnen, dass eine FPGA-Architektur gewählt wird die ein Clustering überflüssig macht.
+        Abschließend sollen die Ergebnisse der entworfenen Software mit denen von VPR verglichen werden.
+        \\\\
         Der grobe Ablauf des gesamten Entwurfes besteht darin, die Netzliste einzulesen und
         mithilfe der FPGA-Architektur eine passende Platzierung zu ermitteln.
         In der Netzliste, die als *.net Datei abgelegt wird, befinden sich alle Informationen über
